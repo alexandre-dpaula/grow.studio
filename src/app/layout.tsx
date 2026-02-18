@@ -16,16 +16,16 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Grow+ Studio | Creative Agency & Content Production",
+  title: "Grow+ Studio | Agência Criativa & Produção de Conteúdo",
   description:
-    "Grow+ Studio is a creative agency and production studio focused on branding, audiovisual storytelling, and digital infrastructure for entrepreneurs in Brazil and the United States.",
+    "Grow+ Studio é uma agência criativa e produtora focada em branding, storytelling audiovisual e infraestrutura digital para empreendedores brasileiros com empresas no Brasil e nos Estados Unidos.",
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ?? "https://growstudio.vercel.app"
   ),
   openGraph: {
-    title: "Grow+ Studio | Creative Agency & Content Production",
+    title: "Grow+ Studio | Agência Criativa & Produção de Conteúdo",
     description:
-      "Grow+ Studio is a creative agency and production studio focused on branding, audiovisual storytelling, and digital infrastructure for entrepreneurs in Brazil and the United States.",
+      "Grow+ Studio é uma agência criativa e produtora focada em branding, storytelling audiovisual e infraestrutura digital para empreendedores brasileiros com empresas no Brasil e nos Estados Unidos.",
     type: "website",
     locale: "pt_BR",
     images: [
@@ -33,15 +33,15 @@ export const metadata: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Grow+ Studio - Creative Agency & Content Production",
+        alt: "Grow+ Studio - Agência Criativa & Produção de Conteúdo",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Grow+ Studio | Creative Agency & Content Production",
+    title: "Grow+ Studio | Agência Criativa & Produção de Conteúdo",
     description:
-      "Grow+ Studio is a creative agency and production studio focused on branding, audiovisual storytelling, and digital infrastructure for entrepreneurs in Brazil and the United States.",
+      "Grow+ Studio é uma agência criativa e produtora focada em branding, storytelling audiovisual e infraestrutura digital para empreendedores brasileiros com empresas no Brasil e nos Estados Unidos.",
     images: ["/og-image.jpg"],
   },
 };

@@ -12,7 +12,7 @@ export const copy = {
     hero: {
       eyebrow: "Oi, somos",
       headingPrimary: "Grow+ Studio",
-      headingSecondary: "AGÊNCIA CRIATIVA & ESTÚDIO DE CONTEÚDO",
+      headingSecondary: "AGÊNCIA CRIATIVA & PRODUÇÃO DE CONTEÚDO",
       subtext:
         "Construímos presença digital, conteúdo cinematográfico e sistemas escaláveis para marcas prontas para crescer.",
       ctaPrimary: "Quero crescer agora",
