@@ -1,26 +1,80 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
+  --bg: #0b0b0f;
+  --bg-secondary: #111116;
+  --card: #1a1a22;
+  --text-primary: #ffffff;
+  --text-muted: #b3b3c2;
+  --accent: #0082fb;
+  --grow: #00e676;
+  --shadow-soft: 0 28px 80px -40px rgba(0, 0, 0, 0.85);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+  letter-spacing: -0.01em;
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-heading {
+  font-family: var(--font-heading), ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+::selection {
+  background: rgba(255, 106, 0, 0.35);
+  color: #fff;
+}
+
+.gradient-orbit {
+  background: radial-gradient(circle at 20% 20%, rgba(255, 106, 0, 0.35), transparent 55%),
+    radial-gradient(circle at 80% 10%, rgba(192, 38, 255, 0.35), transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(0, 194, 255, 0.35), transparent 55%);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px);
+}
+
+.text-gradient {
+  background: linear-gradient(90deg, #0082fb 0%, #0064e0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-overlay {
+  background: linear-gradient(120deg, rgba(255, 106, 0, 0.45), rgba(192, 38, 255, 0.2), rgba(0, 102, 255, 0.35));
+}
+
+.section-spacing {
+  padding: 120px 0;
+}
+
+.shadow-soft {
+  box-shadow: var(--shadow-soft);
 }
