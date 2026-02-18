@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     locale: "pt_BR",
     images: [
       {
-        url: "/og-image.png",
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Grow+ Studio - Creative Agency & Content Production",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     title: "Grow+ Studio | Creative Agency & Content Production",
     description:
       "Grow+ Studio is a creative agency and production studio focused on branding, audiovisual storytelling, and digital infrastructure for entrepreneurs in Brazil and the United States.",
-    images: ["/og-image.png"],
+    images: ["/og-image.jpg"],
   },
 };
 
