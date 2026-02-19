@@ -17,10 +17,11 @@ export default function CTASection() {
           <div className="pointer-events-none absolute inset-0">
             <ShaderGradientCanvas
               style={{ position: "absolute", inset: 0, borderRadius: 28 }}
+              pixelDensity={1}
+              fov={45}
             >
               <ShaderGradient
                 animate="off"
-                axesHelper="off"
                 brightness={1.2}
                 cAzimuthAngle={180}
                 cDistance={3.6}
@@ -29,27 +30,18 @@ export default function CTASection() {
                 color1="#000000"
                 color2="#0000a3"
                 color3="#0cb18b"
-                destination="onCanvas"
-                embedMode="off"
                 envPreset="city"
-                format="gif"
-                fov={45}
-                frameRate={10}
-                gizmoHelper="hide"
                 grain="on"
                 lightType="3d"
-                pixelDensity={1}
                 positionX={-1.4}
                 positionY={0}
                 positionZ={0}
-                range="disabled"
-                rangeEnd={35.3}
-                rangeStart={0}
                 reflection={0.4}
                 rotationX={0}
                 rotationY={10}
                 rotationZ={50}
                 shader="defaults"
+                toggleAxis={false}
                 type="plane"
                 uAmplitude={1}
                 uDensity={1.3}
