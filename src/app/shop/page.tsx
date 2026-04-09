@@ -98,7 +98,6 @@ const templates: TemplateItem[] = [
   },
 ];
 
-const projectPreviewScale = 0.2;
 
 export const metadata: Metadata = {
   title: "Shop | GrowS",
@@ -181,19 +180,14 @@ export default function ShopPage() {
               className="group overflow-hidden rounded-2xl border border-white/10 bg-[#191917]"
             >
               <div className="relative aspect-video overflow-hidden border-b border-white/8 bg-[#121210]">
-                <iframe
-                  src={template.previewUrl}
-                  title={`Preview ${template.title}`}
-                  loading="lazy"
-                  className="absolute left-0 top-0 border-0"
-                  style={{
-                    width: `${100 / projectPreviewScale}%`,
-                    height: `${100 / projectPreviewScale}%`,
-                    transform: `scale(${projectPreviewScale})`,
-                    transformOrigin: "top left",
-                  }}
-                />
-                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0)_25%,rgba(0,0,0,0.55)_100%)]" />
+                <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(244,123,79,0.08),rgba(255,255,255,0.03))]" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="space-y-2 text-center opacity-20">
+                    {[80, 60, 70, 50].map((w, i) => (
+                      <div key={i} className="mx-auto h-2 rounded-full bg-white" style={{ width: `${w}%` }} />
+                    ))}
+                  </div>
+                </div>
                 <span className="absolute left-3 top-3 rounded-full border border-white/14 bg-black/45 px-2.5 py-1 text-[0.68rem] uppercase tracking-[0.1em] text-[#d9d5ce]">
                   {template.category}
                 </span>
