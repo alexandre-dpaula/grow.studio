@@ -6,15 +6,19 @@ export const copy = {
         { label: "Sobre", href: "#about" },
         { label: "Projetos", href: "#projects" },
         { label: "Serviços", href: "#services" },
+        { label: "Ver templates", href: "/shop" },
+        { label: "Acessar comunidade", href: "/comunidade", highlight: true },
       ],
       contact: "Contato",
     },
     hero: {
-      eyebrow: "Oi, somos",
-      headingPrimary: "Grow+ Studio",
-      headingSecondary: "AGÊNCIA CRIATIVA & PRODUÇÃO DE CONTEÚDO",
+      eyebrowBrandOnly: true,
+      eyebrowPrefix: "",
+      eyebrow: "Especialistas em transformar",
+      headingPrimary: "Sua marca forte na América.",
+      headingSecondary: "Estruturada. Profissional. Escalável.",
       subtext:
-        "Construímos presença digital, conteúdo cinematográfico e sistemas escaláveis para marcas prontas para crescer.",
+        "A Grow Studio ajuda empresários brasileiros nos Estados Unidos a posicionarem suas marcas com padrão profissional, conteúdo estratégico.",
       ctaPrimary: "Quero crescer agora",
       ctaSecondary: "Ver projetos",
       highlights: [
@@ -25,109 +29,186 @@ export const copy = {
     },
     trust: {
       eyebrow: "Confiam em nós",
+      items: [
+        "+ Conteúdos",
+        "+ Estratégia",
+        "+ Autoridade",
+        "+ Sistemas",
+        "+ Escala",
+        "+ Crescimento",
+      ],
     },
     about: {
-      eyebrow: "Por trás do crescimento",
-      title: "Moldamos marcas",
-      subtitle: "que querem mais",
+      eyebrow: "Sobre / Posicionamento",
+      title: "Não criamos apenas marcas.",
+      subtitle: "Criamos estrutura para crescer.",
       textPrimary:
-        "Grow+ Studio é uma agência criativa e produtora focada em branding, storytelling audiovisual e infraestrutura digital para empreendedores no Brasil e nos Estados Unidos.",
+        "Muitos profissionais e empresas trabalham muito e continuam invisíveis no digital. Sem posicionamento claro. Sem presença forte no Google. Sem uma estrutura que gere clientes com consistência.",
       textSecondary:
-        "Na Grow+ Studio, cada projeto é feito estrategicamente para gerar resultados mensuráveis. Não criamos só posts, criamos conexões. Não fazemos apenas vídeos, criamos narrativas memoráveis. E não construímos só sistemas — entregamos ferramentas que automatizam o crescimento.",
-      cta: "Vamos construir juntos",
-      overlayBadge: "Autoridade + Transformação",
+        "O resultado é dependência de indicação, crescimento instável e pouca previsibilidade. A Grow+ Studio organiza estratégia, branding, produção audiovisual, websites, sistemas digitais e geração de demanda para transformar operação em uma marca estruturada. Não entregamos apenas presença online. Entregamos estrutura de crescimento digital para negócios.",
+      cta: "Quero estruturar meu negócio",
+      overlayBadge: "Estrutura + Crescimento",
       overlayText: [
-        "Já ajudamos dezenas de empreendedores a consolidar presença digital e aumentar faturamento, tanto no Brasil quanto nos EUA.",
-        "Antes: marca invisível nas redes. Depois: sistema automatizado gerando leads e conteúdo com impacto.",
+        "Para brasileiros que empreendem nos Estados Unidos, empresas em expansão e igrejas que precisam comunicar com profissionalismo.",
+        "Mais clareza no posicionamento. Mais autoridade na percepção. Mais consistência na geração de clientes.",
       ],
     },
     services: {
       eyebrow: "Serviços",
-      title: "Sistemas criativos que capturam, encantam e convertem.",
+      title: "A estrutura que faz negócios crescerem.",
       description:
-        "Não somos apenas uma agência. Somos a ponte entre sua marca e o crescimento real.",
+        "Cada serviço resolve uma parte crítica do crescimento: posicionamento, percepção, aquisição e escala.",
       cards: [
         {
-          title: "Estratégia de Marca",
+          title: "Estratégia e Posicionamento",
           description:
-            "Seu posicionamento com clareza. Sua marca com significado. Sua presença com impacto.",
+            "Clareza de mercado, oferta e mensagem para atrair o cliente certo.",
         },
         {
           title: "Identidade Visual",
           description:
-            "Design cinematográfico que captura atenção e eleva a percepção de valor.",
+            "Uma marca profissional que transmite confiança e aumenta valor percebido.",
         },
         {
           title: "Produção Audiovisual",
           description:
-            "Vídeos, fotos e narrativa visual que criam memórias e desejo.",
+            "Conteúdo que gera autoridade, destaca sua marca e acelera decisões.",
         },
         {
           title: "Web & Sistemas Digitais",
           description:
-            "Transforme tráfego em clientes com automações e sistemas escaláveis.",
+            "Estruturas que apresentam, convertem e organizam oportunidades.",
+        },
+        {
+          title: "Geração de Clientes",
+          description:
+            "Campanhas em Google Ads e Meta Ads para criar demanda qualificada com previsibilidade.",
         },
       ],
     },
     portfolio: {
-      eyebrow: "Projetos selecionados",
-      title: "Marcas reais. Impacto real.",
+      eyebrow: "Marcas que confiaram",
+      title: "Marcas reais. Projetos reais. Crescimento real.",
+      description:
+        "Nosso trabalho existe para posicionar melhor, comunicar com clareza e gerar resultado. Cada projeto nasce para fortalecer marca, aumentar autoridade e criar estrutura para crescer.",
       cards: [
         {
-          title: "Atlas Launch",
-          category: "Brand Film",
-          description: "Storytelling cinematográfico com sistemas digitais escaláveis.",
+          title: "Profissionais de serviços",
+          category: "Posicionamento + Presença",
+          description:
+            "Estruturas digitais para sair da indicação e começar a gerar oportunidades com consistência.",
         },
         {
-          title: "Aurora Systems",
-          category: "Web + Automação",
-          description: "Experiências digitais com foco em performance e conversão.",
+          title: "Empresas em expansão",
+          category: "Branding + Sistemas",
+          description:
+            "Marcas organizadas para comunicar melhor, vender com clareza e crescer com direção.",
         },
         {
-          title: "Pulse Studio",
-          category: "Identidade Visual",
-          description: "Design premium para marcas que querem ser lembradas.",
+          title: "Igrejas e ministérios",
+          category: "Comunicação + Conteúdo",
+          description:
+            "Presença profissional para fortalecer mensagem, conexão e alcance.",
         },
         {
-          title: "Vista Commerce",
-          category: "Campanha de Produto",
-          description: "Campanhas audiovisuais com impacto direto em vendas.",
+          title: "Negócios locais nos EUA",
+          category: "Tráfego + Conversão",
+          description:
+            "Campanhas e páginas focadas em demanda qualificada e previsibilidade.",
+        },
+      ],
+    },
+    testimonials: {
+      eyebrow: "Testemunhos",
+      title: "Resultados que se veem. E se escutam.",
+      description:
+        "Uma seleção de relatos em vídeo para mostrar, com clareza, como estrutura, percepção e crescimento mudam quando a base certa entra no negócio.",
+      cards: [
+        {
+          label: "Testemunho 01",
+          name: "Ney Fraga",
+          role: "New Cont",
+          quote:
+            "Mais clareza no posicionamento. Mais confiança na apresentação. Mais força para vender.",
+          poster: "/neyfraga.png",
+          videoUrl: "",
+        },
+        {
+          label: "Testemunho 02",
+          name: "Jhonatan Berg",
+          role: "Mkt",
+          quote:
+            "O negócio deixou de parecer improvisado e passou a transmitir estrutura real.",
+          poster: "/jhonatanberge.png",
+          videoUrl: "",
+        },
+        {
+          label: "Testemunho 03",
+          name: "Fabio Lucas",
+          role: "Cantor e Compositor",
+          quote:
+            "A percepção mudou. A autoridade cresceu. As oportunidades ficaram mais qualificadas.",
+          poster: "/fabiolucas.png",
+          videoUrl: "",
+        },
+        {
+          label: "Testemunho 04",
+          name: "Sandro",
+          role: "Parcelado USA",
+          quote:
+            "Antes era indicação. Agora existe uma estrutura mais clara para crescer com consistência.",
+          poster: "/mobile-br.jpg",
+          videoUrl: "",
+        },
+        {
+          label: "Testemunho 05",
+          name: "Mock",
+          role: "",
+          quote:
+            "A mensagem ganhou mais força visual, mais organização e mais profissionalismo.",
+          poster: "/1mobile.jpg",
+          videoUrl: "",
         },
       ],
     },
     process: {
-      eyebrow: "Como construímos crescimento",
-      title: "Sistemas feitos para ganhar ritmo.",
+      eyebrow: "Método",
+      title: "O Sistema de Crescimento Grow+",
       steps: [
         {
-          title: "Estratégia & Planejamento",
+          title: "Estratégia",
           description:
-            "Alinhamos objetivos, público e a narrativa que vai guiar todo o projeto.",
+            "Diagnóstico claro para definir mercado, oferta e direção.",
         },
         {
-          title: "Design & Produção",
+          title: "Estrutura",
           description:
-            "Criamos identidade e conteúdo cinematográfico com foco em impacto.",
+            "Posicionamento, identidade e base digital organizados para crescer.",
         },
         {
-          title: "Lançamento & Crescimento",
+          title: "Conteúdo",
           description:
-            "Executamos com automações e sistemas que geram resultados.",
+            "Materiais visuais e mensagens que geram autoridade e confiança.",
         },
         {
-          title: "Suporte Contínuo",
+          title: "Geração de Demanda",
           description:
-            "Otimizamos performance e acompanhamos sua escala no Brasil e nos EUA.",
+            "Campanhas e canais para atrair as pessoas certas com consistência.",
+        },
+        {
+          title: "Escala",
+          description:
+            "Otimização contínua para transformar atenção em crescimento previsível.",
         },
       ],
     },
     cta: {
-      eyebrow: "Vamos crescer sua marca",
-      title: "Conteúdo que vende. Sistemas que escalam.",
+      eyebrow: "Próximo passo",
+      title: "Se o seu negócio quer crescer, ele precisa de estrutura.",
       description:
-        "Ajudamos empreendedores brasileiros a crescer com conteúdo estratégico e sistemas automatizados, com atuação no Brasil e nos Estados Unidos.",
-      primary: "Receba uma proposta personalizada",
-      secondary: "Quero conteúdo que vende",
+        "A Grow+ Studio ajuda profissionais, empresas e igrejas a posicionarem sua marca, organizarem sua presença digital e gerarem clientes com mais previsibilidade.",
+      primary: "Quero estruturar meu crescimento",
+      secondary: "Quero estruturar meu crescimento",
     },
     footer: {
       tagline: "Grow+ Studio — Agência Criativa & Produção de Conteúdo.",
@@ -141,11 +222,14 @@ export const copy = {
         { label: "About", href: "#about" },
         { label: "Projects", href: "#projects" },
         { label: "Services", href: "#services" },
+        { label: "Templates", href: "/shop" },
+        { label: "Community", href: "/comunidade", highlight: true },
       ],
       contact: "Contact",
     },
     hero: {
-      eyebrow: "Hey, we are",
+      eyebrowPrefix: "We are",
+      eyebrow: "Specialists in transforming",
       headingPrimary: "Grow+ Studio",
       headingSecondary: "Creative Agency & Content Studio",
       subtext:
@@ -160,109 +244,186 @@ export const copy = {
     },
     trust: {
       eyebrow: "Trusted by",
+      items: [
+        "+ Content",
+        "+ Strategy",
+        "+ Authority",
+        "+ Systems",
+        "+ Scale",
+        "+ Growth",
+      ],
     },
     about: {
-      eyebrow: "Behind the growth",
-      title: "We shape brands",
-      subtitle: "that want more",
+      eyebrow: "About / Positioning",
+      title: "We do not just build brands.",
+      subtitle: "We build growth infrastructure.",
       textPrimary:
-        "Grow+ Studio is a creative agency and production studio focused on branding, audiovisual storytelling and digital infrastructure for entrepreneurs in Brazil and the United States.",
+        "Many professionals and companies work hard and still remain invisible online. No clear positioning. No strong Google presence. No structure that generates clients consistently.",
       textSecondary:
-        "At Grow+ Studio, every project is built strategically to deliver measurable results. We do not just create posts, we build connections. We do not just make videos, we craft memorable narratives. And we do not just build systems — we deliver tools that automate growth.",
-      cta: "Let's build together",
-      overlayBadge: "Authority + Transformation",
+        "The result is referral dependency, unstable growth and low predictability. Grow+ Studio combines strategy, branding, audiovisual production, websites, digital systems and demand generation to turn operations into structured brands. We do not deliver online presence only. We deliver digital growth infrastructure for businesses.",
+      cta: "I want to structure my business",
+      overlayBadge: "Structure + Growth",
       overlayText: [
-        "We have helped dozens of entrepreneurs strengthen their digital presence and increase revenue in Brazil and the US.",
-        "Before: invisible brand on social media. After: automated system generating leads and high-impact content.",
+        "For Brazilians building businesses in the United States, growing companies and churches that need professional communication.",
+        "More clarity in positioning. More authority in perception. More consistency in client generation.",
       ],
     },
     services: {
       eyebrow: "Services",
-      title: "Creative systems that capture, enchant and convert.",
+      title: "The structure that makes businesses grow.",
       description:
-        "We are not just an agency. We are the bridge between your brand and real growth.",
+        "Each service solves a critical part of growth: positioning, perception, acquisition and scale.",
       cards: [
         {
-          title: "Brand Strategy",
+          title: "Strategy and Positioning",
           description:
-            "Your positioning with clarity. Your brand with meaning. Your presence with impact.",
+            "Clear market focus, offer and messaging to attract the right clients.",
         },
         {
           title: "Visual Identity",
           description:
-            "Cinematic design that captures attention and elevates perceived value.",
+            "A professional brand system that builds trust and raises perceived value.",
         },
         {
           title: "Audiovisual Production",
           description:
-            "Videos, photography and visual narrative that create memory and desire.",
+            "Content that builds authority, differentiates your brand and speeds up decisions.",
         },
         {
           title: "Web & Digital Systems",
           description:
-            "Turn traffic into clients with automation and scalable systems.",
+            "Structures that present, convert and organize opportunities.",
+        },
+        {
+          title: "Client Generation",
+          description:
+            "Google Ads and Meta Ads campaigns built to generate qualified demand with predictability.",
         },
       ],
     },
     portfolio: {
-      eyebrow: "Selected work",
-      title: "Real brands. Real impact.",
+      eyebrow: "Brands that trusted us",
+      title: "Real brands. Real projects. Real growth.",
+      description:
+        "Our work exists to position better, communicate clearly and generate results. Every project is built to strengthen brands, increase authority and create structure for growth.",
       cards: [
         {
-          title: "Atlas Launch",
-          category: "Brand Film",
-          description: "Cinematic storytelling with scalable digital systems.",
+          title: "Service professionals",
+          category: "Positioning + Presence",
+          description:
+            "Digital structures built to reduce referral dependency and create consistent opportunities.",
         },
         {
-          title: "Aurora Systems",
-          category: "Web + Automation",
-          description: "Digital experiences focused on performance and conversion.",
+          title: "Growing companies",
+          category: "Branding + Systems",
+          description:
+            "Brands organized to communicate better, sell clearly and scale with direction.",
         },
         {
-          title: "Pulse Studio",
-          category: "Visual Identity",
-          description: "Premium design for brands that want to be remembered.",
+          title: "Churches and ministries",
+          category: "Communication + Content",
+          description:
+            "Professional presence designed to strengthen message, connection and reach.",
         },
         {
-          title: "Vista Commerce",
-          category: "Product Campaign",
-          description: "Audiovisual campaigns with direct impact on sales.",
+          title: "Local businesses in the US",
+          category: "Traffic + Conversion",
+          description:
+            "Campaigns and landing pages focused on qualified demand and predictability.",
+        },
+      ],
+    },
+    testimonials: {
+      eyebrow: "Testimonials",
+      title: "Results you can see. And hear.",
+      description:
+        "A curated set of video testimonials designed to show, clearly, how structure, perception and growth change when the right foundation enters the business.",
+      cards: [
+        {
+          label: "Testimonial 01",
+          name: "Ney Fraga",
+          role: "New Cont",
+          quote:
+            "Clearer positioning. Stronger presentation. More confidence to sell.",
+          poster: "/neyfraga.png",
+          videoUrl: "",
+        },
+        {
+          label: "Testimonial 02",
+          name: "Jhonatan Berg",
+          role: "Mkt",
+          quote:
+            "The business stopped feeling improvised and started communicating real structure.",
+          poster: "/jhonatanberge.png",
+          videoUrl: "",
+        },
+        {
+          label: "Testimonial 03",
+          name: "Fabio Lucas",
+          role: "Cantor e Compositor",
+          quote:
+            "Perception changed. Authority increased. Opportunities became more qualified.",
+          poster: "/fabiolucas.png",
+          videoUrl: "",
+        },
+        {
+          label: "Testimonial 04",
+          name: "Sandro",
+          role: "Parcelado USA",
+          quote:
+            "It used to be referrals only. Now there is a clearer structure for consistent growth.",
+          poster: "/mobile.jpg",
+          videoUrl: "",
+        },
+        {
+          label: "Testimonial 05",
+          name: "Mock",
+          role: "",
+          quote:
+            "The message gained stronger visuals, better organization and more professionalism.",
+          poster: "/1mobile.jpg",
+          videoUrl: "",
         },
       ],
     },
     process: {
-      eyebrow: "How we build growth",
-      title: "Systems made for momentum.",
+      eyebrow: "Method",
+      title: "The Grow+ Growth System",
       steps: [
         {
-          title: "Strategy & Planning",
+          title: "Strategy",
           description:
-            "We align goals, audience and the narrative that will guide the project.",
+            "A clear diagnosis to define market, offer and direction.",
         },
         {
-          title: "Design & Production",
+          title: "Structure",
           description:
-            "We create identity and cinematic content focused on impact.",
+            "Positioning, identity and digital foundations organized for growth.",
         },
         {
-          title: "Launch & Growth",
+          title: "Content",
           description:
-            "We execute with automation and systems that generate results.",
+            "Visual assets and messaging that build authority and trust.",
         },
         {
-          title: "Ongoing Support",
+          title: "Demand Generation",
           description:
-            "We optimize performance and support scale across Brazil and the US.",
+            "Campaigns and channels that consistently attract the right people.",
+        },
+        {
+          title: "Scale",
+          description:
+            "Continuous optimization to turn attention into predictable growth.",
         },
       ],
     },
     cta: {
-      eyebrow: "Let's grow your brand",
-      title: "Content that sells. Systems that scale.",
+      eyebrow: "Next step",
+      title: "If your business wants to grow, it needs structure.",
       description:
-        "We help Brazilian entrepreneurs scale with strategic content and automated systems across Brazil and the United States.",
-      primary: "Get a tailored proposal",
-      secondary: "I want content that sells",
+        "Grow+ Studio helps professionals, companies and churches position their brand, organize their digital presence and generate clients with more predictability.",
+      primary: "I want to structure my growth",
+      secondary: "I want to structure my growth",
     },
     footer: {
       tagline: "Grow+ Studio — Creative Agency & Content Production.",

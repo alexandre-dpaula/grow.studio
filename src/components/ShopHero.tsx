@@ -107,19 +107,13 @@ export default function ShopHero() {
               Templates prontos, materiais do curso e comunidade exclusiva — em um só lugar.
             </p>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="#templates-html"
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#f47b4f] px-5 py-3 text-[0.85rem] font-bold uppercase tracking-wide text-[#1f1f1d] transition-colors hover:bg-[#f69069]"
-              >
-                Ver templates
-                <ArrowRight size={15} />
-              </Link>
+            <div className="mt-8">
               <Link
                 href="/comunidade"
-                className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/[0.03] px-5 py-3 text-[0.84rem] font-bold uppercase tracking-wide text-[#c2beb7] transition-colors hover:border-white/25 hover:text-[#e6e2d9]"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#f47b4f] px-5 py-3 text-[0.85rem] font-bold uppercase tracking-wide text-[#1f1f1d] transition-colors hover:bg-[#f69069]"
               >
                 Acessar comunidade
+                <ArrowRight size={15} />
               </Link>
             </div>
           </div>

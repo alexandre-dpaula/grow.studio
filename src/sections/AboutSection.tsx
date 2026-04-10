@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import Button from "@/components/Button";
 import { withBrand } from "@/components/BrandMark";
@@ -13,46 +14,58 @@ export default function AboutSection() {
   return (
     <section id="about" className="section-spacing">
       <Container>
-        <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
-          <Reveal>
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#0082fb]">
-              {t.about.eyebrow}
-            </p>
-            <h2 className="mt-5 font-heading text-[clamp(2.2rem,5vw,4rem)] font-bold leading-tight">
-              {t.about.title}
-              <span className="block text-white/70">{t.about.subtitle}</span>
-            </h2>
-            <p className="mt-6 text-base text-white/70">
-              {withBrand(t.about.textPrimary)}
-            </p>
-            <p className="mt-4 text-base text-white/70">
-              {withBrand(t.about.textSecondary)}
-            </p>
-            <div className="mt-8">
-              <Button href="#contact" variant="secondary" icon={<ArrowRight size={16} />}>
-                {t.about.cta}
-              </Button>
+        <Reveal className="max-w-[75rem]">
+          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[#0082fb] sm:text-sm sm:tracking-[0.3em]">
+            {t.about.eyebrow}
+          </p>
+          <h2 className="section-title mt-4 font-heading text-[clamp(2.15rem,10vw,4rem)] font-bold sm:mt-5">
+            <span className="block lg:whitespace-nowrap">{t.about.title}</span>
+            <span className="mt-1 block text-white/70 lg:whitespace-nowrap">
+              {t.about.subtitle}
+            </span>
+          </h2>
+        </Reveal>
+        <div className="mt-10 grid gap-6 sm:mt-12 sm:gap-8 xl:grid-cols-[0.67fr_0.33fr] xl:items-start">
+          <Reveal className="relative">
+            <div className="pointer-events-none absolute -left-6 -top-6 h-32 w-32 rounded-full bg-[#0082fb]/14 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-8 right-8 h-40 w-40 rounded-full bg-white/6 blur-3xl" />
+            <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-[color:var(--bg-secondary)] shadow-soft sm:rounded-[34px]">
+              <div className="relative h-[360px] sm:h-[460px] md:h-[620px] xl:h-[760px]">
+                <Image
+                  src="/hf_20260313_140155_9f1bc704-126c-461a-ae1a-9c42d5510c77.jpeg"
+                  alt="Grow+ Studio positioning section"
+                  fill
+                  sizes="(max-width: 1279px) 100vw, 67vw"
+                  unoptimized
+                  className="object-cover object-[50%_24%]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-tr from-black/18 via-transparent to-black/6" />
+                <div className="absolute inset-0 ring-1 ring-inset ring-white/10" />
+              </div>
             </div>
           </Reveal>
-          <Reveal className="relative">
-            <div className="relative overflow-hidden rounded-[28px] border border-white/10 shadow-soft">
-              <div
-                className="absolute inset-0"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(140deg, rgba(11,11,15,0.2), rgba(11,11,15,0.85)), url('https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1200&q=80')",
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-              />
-              <div className="relative z-10 h-[420px] p-10">
-                <div className="glass-card inline-flex items-center gap-3 rounded-full px-5 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white/80">
-                  {t.about.overlayBadge}
-                </div>
-                <div className="mt-6 space-y-4 text-sm text-white/70">
-                  <p>{t.about.overlayText[0]}</p>
-                  <p>{t.about.overlayText[1]}</p>
-                </div>
+          <Reveal className="xl:mt-0">
+            <div className="glass-card rounded-[24px] p-5 sm:p-6 md:rounded-[28px] md:p-8 lg:p-10">
+              <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2.5 font-heading text-[11px] font-semibold uppercase tracking-[0.18em] text-white/78 sm:px-5 sm:py-3 sm:text-[13px] sm:tracking-[0.22em] md:text-sm">
+                {t.about.overlayBadge}
+              </div>
+              <div className="mt-6 space-y-5 sm:mt-8 sm:space-y-6">
+                <p className="text-[15px] leading-7 text-white/72 sm:text-base">
+                  {withBrand(t.about.textPrimary)}
+                </p>
+                <p className="text-[15px] leading-7 text-white/72 sm:text-base">
+                  {withBrand(t.about.textSecondary)}
+                </p>
+              </div>
+              <div className="mt-7 sm:mt-8">
+                <Button
+                  href="#contact"
+                  variant="secondary"
+                  icon={<ArrowRight size={16} />}
+                  className="sm:w-auto"
+                >
+                  {t.about.cta}
+                </Button>
               </div>
             </div>
           </Reveal>

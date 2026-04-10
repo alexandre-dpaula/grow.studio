@@ -1,10 +1,10 @@
 import type { ReactNode } from "react";
 
 const baseStyles =
-  "inline-flex items-center justify-between gap-3 rounded-full px-6 py-3 text-base font-semibold font-heading transition-all duration-300 ease-out";
+  "inline-flex w-full items-center justify-center gap-2.5 rounded-full px-5 py-3 text-[15px] font-semibold font-heading transition-all duration-300 ease-out sm:w-auto sm:justify-between sm:gap-3 sm:px-6 sm:text-base";
 
 const iconWrap =
-  "flex h-9 w-9 items-center justify-center rounded-full text-current transition-all duration-300";
+  "flex h-8 w-8 items-center justify-center rounded-full text-current transition-all duration-300 sm:h-9 sm:w-9";
 
 type ButtonProps = {
   children: ReactNode;
@@ -12,6 +12,7 @@ type ButtonProps = {
   icon?: ReactNode;
   className?: string;
   href?: string;
+  onClick?: () => void;
 };
 
 export default function Button({
@@ -20,6 +21,7 @@ export default function Button({
   icon,
   className = "",
   href,
+  onClick,
 }: ButtonProps) {
   const variantStyles =
     variant === "primary"
@@ -37,14 +39,14 @@ export default function Button({
 
   if (href) {
     return (
-      <a href={href} className={`${baseStyles} ${variantStyles} ${className}`}>
+      <a href={href} onClick={onClick} className={`${baseStyles} ${variantStyles} ${className}`}>
         {content}
       </a>
     );
   }
 
   return (
-    <button type="button" className={`${baseStyles} ${variantStyles} ${className}`}>
+    <button type="button" onClick={onClick} className={`${baseStyles} ${variantStyles} ${className}`}>
       {content}
     </button>
   );
