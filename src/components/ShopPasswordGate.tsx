@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Lock, ArrowRight } from "lucide-react";
 
-const SENHA = "iASEMLIMITES";
+const SENHA = "iA1104";
 
 export default function ShopPasswordGate({ children }: { children: React.ReactNode }) {
   const [input, setInput] = useState("");
