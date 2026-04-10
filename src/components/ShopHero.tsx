@@ -108,13 +108,15 @@ export default function ShopHero() {
             </p>
 
             <div className="mt-8">
-              <Link
-                href="/comunidade"
+              <a
+                href="https://checkout.infinitepay.io/qt-sala01-stageone/3obvvPOUZV"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#f47b4f] px-5 py-3 text-[0.85rem] font-bold uppercase tracking-wide text-[#1f1f1d] transition-colors hover:bg-[#f69069]"
               >
                 Acessar comunidade
                 <ArrowRight size={15} />
-              </Link>
+              </a>
             </div>
           </div>
 

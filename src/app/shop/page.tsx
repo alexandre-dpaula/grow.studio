@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import ShopHero from "@/components/ShopHero";
 import TreinamentosCardsGrid from "@/components/TreinamentosCardsGrid";
+import ShopPasswordGate from "@/components/ShopPasswordGate";
 
 type BonusItem = {
   id: string;
@@ -32,11 +33,11 @@ const bonusItems: BonusItem[] = [
   },
   {
     id: "ebooks",
-    title: "EBooks Estratégicos",
+    title: "Baixar EBooks",
     description:
-      "Guias práticos de oferta, copy e posicionamento para transformar serviço em produto.",
-    cta: "Ler eBooks",
-    href: "/comunidade?view=treinamentos",
+      "Esse Treinamento ensina a utilizarem a Inteligência Artificial de forma estratégica, abandonando o uso superficial e genérico.",
+    cta: "Baixar eBooks",
+    href: "https://drive.google.com/uc?export=download&id=1vTArDG5vreAP7UvDnZpnZ6DKMKuOe5Wo",
     icon: BookOpen,
   },
   {
@@ -69,6 +70,7 @@ export const metadata: Metadata = {
 
 export default function ShopPage() {
   return (
+    <ShopPasswordGate>
     <main className="min-h-screen bg-[#1f1f1d] text-[#e6e2d9]">
       <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_10%_8%,rgba(244,123,79,0.16),transparent_38%),radial-gradient(circle_at_88%_0%,rgba(241,237,228,0.13),transparent_30%),linear-gradient(180deg,#1f1f1d_0%,#181816_100%)]" />
 
@@ -90,23 +92,41 @@ export default function ShopPage() {
           {bonusItems.map((item) => {
             const Icon = item.icon;
 
+            const isEbook = item.id === "ebooks";
+
             return (
               <article
                 key={item.id}
-                className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition-colors hover:bg-white/[0.05]"
+                className={`flex flex-col rounded-2xl p-5 transition-colors ${
+                  isEbook
+                    ? "border-2 border-lime-300 bg-lime-300 hover:bg-lime-200"
+                    : "border border-white/10 bg-white/[0.03] hover:bg-white/[0.05]"
+                }`}
               >
-                <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[#f47b4f]/35 bg-[#f47b4f]/12 text-[#ffd7c6]">
+                <span className={`inline-flex h-9 w-9 items-center justify-center rounded-xl ${
+                  isEbook
+                    ? "border border-black/15 bg-black/10 text-slate-900"
+                    : "border border-[#f47b4f]/35 bg-[#f47b4f]/12 text-[#ffd7c6]"
+                }`}>
                   <Icon size={16} />
                 </span>
 
-                <h3 className="mt-4 text-[0.92rem] font-bold uppercase tracking-wide text-[#e4e0d8]">{item.title}</h3>
-                <p className="mt-2 flex-1 text-[0.82rem] leading-relaxed text-[#a9a59d]">
+                <h3 className={`mt-4 text-[0.92rem] font-bold uppercase tracking-wide ${isEbook ? "text-slate-900" : "text-[#e4e0d8]"}`}>
+                  {item.title}
+                </h3>
+                <p className={`mt-2 flex-1 text-[0.82rem] leading-relaxed ${isEbook ? "text-slate-800" : "text-[#a9a59d]"}`}>
                   {item.description}
                 </p>
 
                 <Link
                   href={item.href}
-                  className="mt-5 inline-flex items-center gap-1.5 text-[0.8rem] font-medium text-[#f7d1be] transition-colors hover:text-[#ffe4d7]"
+                  target={item.href.startsWith("http") ? "_blank" : undefined}
+                  rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  className={`mt-5 inline-flex items-center gap-1.5 text-[0.8rem] font-bold transition-colors ${
+                    isEbook
+                      ? "text-slate-900 hover:text-slate-700"
+                      : "font-medium text-[#f7d1be] hover:text-[#ffe4d7]"
+                  }`}
                 >
                   {item.cta}
                   <ArrowRight size={13} />
@@ -123,7 +143,7 @@ export default function ShopPage() {
       >
         <div className="mb-6">
           <p className="text-[0.76rem] uppercase tracking-[0.14em] text-[#9f9b94]">
-            Treinamentos · Ao vivo
+            Treinamentos · Presencial
           </p>
           <h2 className="mt-3 font-serif text-[clamp(1.7rem,2.5vw,2.2rem)] text-[#ebe7df]">
             Aprenda na prática e saia com o projeto pronto
@@ -133,5 +153,6 @@ export default function ShopPage() {
         <TreinamentosCardsGrid withReveal={false} />
       </section>
     </main>
+    </ShopPasswordGate>
   );
 }
