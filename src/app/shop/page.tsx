@@ -5,6 +5,7 @@ import {
   BookOpen,
   Gift,
   Layers,
+  LayoutTemplate,
   Sparkles,
   type LucideIcon,
 } from "lucide-react";
@@ -58,6 +59,15 @@ const bonusItems: BonusItem[] = [
     href: "/kit-contexto",
     icon: Layers,
   },
+  {
+    id: "prompt-landing",
+    title: "Gerador de Prompt",
+    description:
+      "Preencha os campos e gere um prompt completo para o Gemini criar sua landing page do zero.",
+    cta: "Gerar prompt",
+    href: "/prompt-landing",
+    icon: LayoutTemplate,
+  },
 ];
 
 
@@ -88,7 +98,7 @@ export default function ShopPage() {
           </div>
         </div>
 
-        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {bonusItems.map((item) => {
             const Icon = item.icon;
 
