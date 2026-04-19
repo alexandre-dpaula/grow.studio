@@ -81,7 +81,7 @@ export default function HeroSection() {
     <>
       <section
         id="home"
-        className="relative h-[100dvh] min-h-[100svh] overflow-hidden bg-black md:min-h-[640px]"
+        className="relative h-dvh min-h-svh overflow-hidden bg-black md:min-h-160"
       >
         <div className="absolute inset-0">
           <div className="absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-[177.78vh] min-w-full -translate-x-1/2 -translate-y-1/2">
@@ -95,14 +95,14 @@ export default function HeroSection() {
               onLoad={() => setIsLoaded(true)}
             />
           </div>
-          <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/10 to-black/35" />
+          <div className="absolute inset-0 bg-linear-to-b from-black/45 via-black/10 to-black/35" />
         </div>
 
         <button
           type="button"
           aria-label="Abrir video completo"
           onClick={openVideoModal}
-          className="absolute inset-0 z-[1] cursor-pointer"
+          className="absolute inset-0 z-1 cursor-pointer"
         >
           <span className="sr-only">Abrir video completo</span>
         </button>

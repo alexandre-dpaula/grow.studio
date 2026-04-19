@@ -10,6 +10,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import ShopHero from "@/components/ShopHero";
+import ShopBannerHero from "@/components/ShopBannerHero";
 import TreinamentosCardsGrid from "@/components/TreinamentosCardsGrid";
 import ShopPasswordGate from "@/components/ShopPasswordGate";
 
@@ -84,9 +85,11 @@ export default function ShopPage() {
     <main className="min-h-screen bg-[#1f1f1d] text-[#e6e2d9]">
       <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_10%_8%,rgba(244,123,79,0.16),transparent_38%),radial-gradient(circle_at_88%_0%,rgba(241,237,228,0.13),transparent_30%),linear-gradient(180deg,#1f1f1d_0%,#181816_100%)]" />
 
+      <ShopBannerHero />
+
       <ShopHero />
 
-      <section className="mx-auto w-full max-w-[1140px] px-4 pb-10 sm:px-6 sm:pb-14 lg:px-8">
+      <section className="mx-auto w-full max-w-285 px-4 pb-10 sm:px-6 sm:pb-14 lg:px-8">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="text-[0.76rem] uppercase tracking-[0.14em] text-[#9f9b94]">
@@ -110,7 +113,7 @@ export default function ShopPage() {
                 className={`flex flex-col rounded-2xl p-5 transition-colors ${
                   isEbook
                     ? "border-2 border-lime-300 bg-lime-300 hover:bg-lime-200"
-                    : "border border-white/10 bg-white/[0.03] hover:bg-white/[0.05]"
+                    : "border border-white/10 bg-white/3 hover:bg-white/5"
                 }`}
               >
                 <span className={`inline-flex h-9 w-9 items-center justify-center rounded-xl ${
@@ -149,7 +152,7 @@ export default function ShopPage() {
 
       <section
         id="templates-html"
-        className="mx-auto w-full max-w-[1140px] px-4 pb-14 sm:px-6 sm:pb-20 lg:px-8"
+        className="mx-auto w-full max-w-285 px-4 pb-14 sm:px-6 sm:pb-20 lg:px-8"
       >
         <div className="mb-6">
           <p className="text-[0.76rem] uppercase tracking-[0.14em] text-[#9f9b94]">

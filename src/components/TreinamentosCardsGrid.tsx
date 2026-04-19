@@ -75,7 +75,7 @@ export default function TreinamentosCardsGrid({
               <h2 className="text-[0.95rem] font-semibold uppercase leading-tight text-white">
                 {treinamento.title}
               </h2>
-              <p className="mt-1.5 text-[0.78rem] leading-[1.5] text-white/72">
+              <p className="mt-1.5 text-[0.78rem] leading-normal text-white/72">
                 {treinamento.cardDescription}
               </p>
             </div>
