@@ -75,20 +75,7 @@ export default function Navbar() {
               >
                 {isMenuOpen ? <X size={18} /> : <Menu size={18} />}
               </button>
-              <Link
-                href="https://www.instagram.com/alexandredpaula/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram de Alexandre Dpaula"
-                className="hidden md:inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/6 text-white/70 transition-all duration-300 hover:border-white/20 hover:bg-white/12 hover:text-white"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-                  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
-                </svg>
-              </Link>
-              <div className="hidden md:block">
+<div className="hidden md:block">
                 <Button
                   href="#contact"
                   variant="secondary"
