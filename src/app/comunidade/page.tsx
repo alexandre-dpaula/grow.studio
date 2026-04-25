@@ -4,13 +4,17 @@ import {
   AppWindow,
   ArrowLeft,
   ArrowRight,
+  BookOpen,
   Boxes,
   ChevronDown,
   Download,
   Eye,
   GraduationCap,
+  Layers,
+  LayoutTemplate,
   Menu,
   MessageSquare,
+  Mic2,
   Plus,
   Share2,
 } from "lucide-react";
@@ -18,6 +22,7 @@ import CommunityAgentChat from "@/components/CommunityAgentChat";
 import CommunityConversationsList from "@/components/CommunityConversationsList";
 import CommunityRecentsList from "@/components/CommunityRecentsList";
 import CommunityUserProfile from "@/components/CommunityUserProfile";
+import CommunityPodcastCards from "@/components/CommunityPodcastCards";
 import PromptCardsGrid from "@/components/PromptCardsGrid";
 import TreinamentosCardsGrid from "@/components/TreinamentosCardsGrid";
 import { COMMUNITY_PROMPTS } from "@/data/community-prompts";
@@ -33,7 +38,15 @@ const sidebarMainItems = [
 const sidebarSecondaryItems = [
   { label: "Conversas", icon: MessageSquare, href: "/comunidade?view=conversas" },
   { label: "Treinamentos", icon: GraduationCap, href: "/comunidade?view=treinamentos" },
-  { label: "Prompts", icon: AppWindow, href: "/comunidade?view=prompts" },
+  { label: "Gerar Página de Vendas", icon: LayoutTemplate, href: "/prompt-pagina-de-vendas?from=comunidade" },
+  { label: "Kit de Contexto", icon: Layers, href: "/kit-contexto?from=comunidade" },
+  {
+    label: "Baixar EBooks",
+    icon: BookOpen,
+    href: "https://drive.google.com/uc?export=download&id=1vTArDG5vreAP7UvDnZpnZ6DKMKuOe5Wo",
+  },
+  { label: "Podcast", icon: Mic2, href: "/comunidade?view=podcast" },
+  { label: "Pack de Prompts", icon: AppWindow, href: "/prompts?from=comunidade" },
   { label: "Projetos", icon: Boxes, href: "/comunidade?view=projetos" },
 ];
 
@@ -98,6 +111,7 @@ export default async function ComunidadePage({ searchParams }: PageProps) {
   const isConversationsView = view === "conversas";
   const isTrainingsView = view === "treinamentos";
   const isProjectsView = view === "projetos";
+  const isPodcastView = view === "podcast";
   const isSettingsView = view === "configuracoes";
   const isLanguageView = view === "idioma";
   const isUpgradeView = view === "upgrade";
@@ -107,6 +121,7 @@ export default async function ComunidadePage({ searchParams }: PageProps) {
     !isPromptsView &&
     !isConversationsView &&
     !isProjectsView &&
+    !isPodcastView &&
     !isTrainingsView &&
     !isSettingsView &&
     !isLanguageView &&
@@ -167,6 +182,8 @@ export default async function ComunidadePage({ searchParams }: PageProps) {
                     <Link
                       key={item.label}
                       href={item.href}
+                      target={item.href.startsWith("http") ? "_blank" : undefined}
+                      rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
                       className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-[0.93rem] transition-colors ${
                         isActive
                           ? "bg-black/55 text-[#e2dfd7]"
@@ -198,7 +215,7 @@ export default async function ComunidadePage({ searchParams }: PageProps) {
                 const isActive =
                   (item.label === "Conversas" && isConversationsView) ||
                   (item.label === "Treinamentos" && isTrainingsView) ||
-                  (item.label === "Prompts" && isPromptsView) ||
+                  (item.label === "Podcast" && isPodcastView) ||
                   (item.label === "Projetos" && isProjectsView);
 
                 if (item.href) {
@@ -263,6 +280,8 @@ export default async function ComunidadePage({ searchParams }: PageProps) {
                     ? "Prompts"
                     : isTrainingsView
                       ? "Treinamentos"
+                    : isPodcastView
+                      ? "Podcast"
                     : isProjectsView
                       ? "Projetos"
                     : isConversationsView
@@ -288,6 +307,8 @@ export default async function ComunidadePage({ searchParams }: PageProps) {
                 </button>
               ) : isTrainingsView ? (
                 <p className="text-[0.9rem] text-[#d6d2cb]">Treinamentos</p>
+              ) : isPodcastView ? (
+                <p className="text-[0.9rem] text-[#d6d2cb]">Podcast</p>
               ) : isPromptsView ? (
                 <p className="text-[0.9rem] text-[#d6d2cb]">Prompts</p>
               ) : isProjectsView ? (
@@ -326,7 +347,7 @@ export default async function ComunidadePage({ searchParams }: PageProps) {
                 <p className="text-xs uppercase tracking-[0.14em] text-[#9d9a93]">
                   Perfil
                 </p>
-                <h1 className="mt-3 font-serif text-[clamp(1.45rem,1.8vw,1.8rem)] text-[#e0dcd4]">
+                <h1 className="mt-3 font-serif text-[clamp(1.45rem,1.8vw,1.8rem)] font-bold uppercase text-[#e0dcd4]">
                   Editar perfil
                 </h1>
                 <p className="mt-3 max-w-2xl text-[0.9rem] text-[#aca9a2]">
@@ -433,7 +454,7 @@ export default async function ComunidadePage({ searchParams }: PageProps) {
                 <p className="text-xs uppercase tracking-[0.14em] text-[#9d9a93]">
                   Preferências
                 </p>
-                <h1 className="mt-3 font-serif text-[clamp(1.45rem,1.8vw,1.8rem)] text-[#e0dcd4]">
+                <h1 className="mt-3 font-serif text-[clamp(1.45rem,1.8vw,1.8rem)] font-bold uppercase text-[#e0dcd4]">
                   Idioma da interface
                 </h1>
                 <p className="mt-3 max-w-2xl text-[0.9rem] text-[#aca9a2]">
@@ -486,7 +507,7 @@ export default async function ComunidadePage({ searchParams }: PageProps) {
                 <p className="text-xs uppercase tracking-[0.14em] text-[#9d9a93]">
                   Plano
                 </p>
-                <h1 className="mt-3 font-serif text-[clamp(1.45rem,1.8vw,1.8rem)] text-[#e0dcd4]">
+                <h1 className="mt-3 font-serif text-[clamp(1.45rem,1.8vw,1.8rem)] font-bold uppercase text-[#e0dcd4]">
                   Upgrade do plano
                 </h1>
                 <p className="mt-3 max-w-2xl text-[0.9rem] text-[#aca9a2]">
@@ -554,7 +575,7 @@ export default async function ComunidadePage({ searchParams }: PageProps) {
                 <p className="text-xs uppercase tracking-[0.15em] text-[#a4a19b]">
                   Biblioteca
                 </p>
-                <h1 className="mt-3 font-serif text-3xl text-[#e1ddd6] sm:text-4xl">
+                <h1 className="mt-3 font-serif text-3xl font-bold uppercase text-[#e1ddd6] sm:text-4xl">
                   Prompts da Comunidade
                 </h1>
                 <p className="mt-4 max-w-2xl text-[0.92rem] text-[#b6b3ab]">
@@ -570,7 +591,7 @@ export default async function ComunidadePage({ searchParams }: PageProps) {
           ) : isTrainingsView ? (
             <div className="flex-1 overflow-y-auto overscroll-contain px-4 pb-8 pt-8 md:px-10 md:pt-10">
               <div className="mx-auto w-full max-w-[920px]">
-                <h1 className="font-serif text-[clamp(1.45rem,1.8vw,1.75rem)] text-[#dcd8d0]">
+                <h1 className="font-serif text-[clamp(1.45rem,1.8vw,1.75rem)] font-bold uppercase text-[#dcd8d0]">
                   Treinamentos
                 </h1>
                 <p className="mt-3 text-[0.86rem] text-[#a6a39d]">
@@ -582,12 +603,29 @@ export default async function ComunidadePage({ searchParams }: PageProps) {
                 </div>
               </div>
             </div>
+          ) : isPodcastView ? (
+            <div className="flex-1 overflow-y-auto overscroll-contain px-4 pb-8 pt-8 md:px-10 md:pt-10">
+              <div className="mx-auto w-full max-w-[1180px]">
+                <p className="text-xs uppercase tracking-[0.15em] text-[#a4a19b]">
+                  Comunidade
+                </p>
+                <h1 className="mt-3 font-serif text-3xl font-bold uppercase text-[#e1ddd6] sm:text-4xl">
+                  Podcast da Comunidade
+                </h1>
+                <p className="mt-4 max-w-2xl text-[0.92rem] text-[#b6b3ab]">
+                  Episódios exclusivos em layout visual estilo streaming, para
+                  você consumir insights práticos sobre IA, oferta e vendas.
+                </p>
+
+                <CommunityPodcastCards />
+              </div>
+            </div>
           ) : isProjectsView ? (
             <div className="flex-1 overflow-y-auto overscroll-contain px-4 pb-8 pt-8 md:px-10 md:pt-10">
               <div className="mx-auto w-full max-w-[1040px]">
                 <div>
                   <div>
-                    <h1 className="font-serif text-[clamp(1.45rem,1.8vw,1.75rem)] text-[#dcd8d0]">
+                    <h1 className="font-serif text-[clamp(1.45rem,1.8vw,1.75rem)] font-bold uppercase text-[#dcd8d0]">
                       Código-fonte dos treinamentos
                     </h1>
                     <p className="mt-2 text-[0.86rem] text-[#a8a59e]">
@@ -680,7 +718,7 @@ export default async function ComunidadePage({ searchParams }: PageProps) {
             <div className="flex-1 overflow-y-auto overscroll-contain px-4 pb-8 pt-8 md:px-10 md:pt-10">
               <div className="mx-auto w-full max-w-[920px]">
                 <div className="flex items-center justify-between gap-4">
-                  <h1 className="font-serif text-[clamp(1.45rem,1.8vw,1.75rem)] text-[#dcd8d0]">
+                  <h1 className="font-serif text-[clamp(1.45rem,1.8vw,1.75rem)] font-bold uppercase text-[#dcd8d0]">
                     Conversas
                   </h1>
                   <button

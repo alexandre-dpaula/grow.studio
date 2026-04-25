@@ -5,7 +5,41 @@ export type CommunityPrompt = {
   prompt: string;
 };
 
-export const COMMUNITY_PROMPTS: CommunityPrompt[] = [
+const VIDEO_PROMPT_BASE = [
+  "Você é roteirista de conteúdo para redes sociais de pequenos negócios.",
+  "",
+  "NEGÓCIO: [descreva]",
+  "TEMA DO REEL: [o que vai mostrar ou explicar]",
+  "OBJETIVO: [vender / educar / engajar / mostrar bastidores]",
+  "TOM: [descontraído / informativo / empolgante]",
+  "",
+  "Entregue com estrutura clara:",
+  "- Gancho nos primeiros 3 segundos",
+  "- Desenvolvimento em 3 blocos de 5–8 segundos",
+  "- CTA nos últimos 5 segundos",
+  "- Texto sugerido para tela (legenda visual)",
+].join("\n");
+
+const GENERIC_PROMPT_BASE = [
+  "Você é estrategista de conteúdo e marketing para pequenos negócios.",
+  "",
+  "NEGÓCIO: [descreva]",
+  "TEMA: [o que vai criar, mostrar ou explicar]",
+  "OBJETIVO: [vender / educar / engajar / captar leads / posicionar marca]",
+  "TOM: [descontraído / informativo / empolgante]",
+  "",
+  "Entregue de forma prática:",
+  "- Estrutura principal da entrega",
+  "- Blocos prontos para execução",
+  "- Variações para teste A/B quando fizer sentido",
+  "- CTA final alinhado ao objetivo",
+].join("\n");
+
+function isVideoScriptPrompt(id: string): boolean {
+  return id.startsWith("reels-") || id.startsWith("trend-viral-");
+}
+
+const COMMUNITY_PROMPTS_RAW: CommunityPrompt[] = [
   {
     id: "imagem-cinematica-anuncio",
     title: "Trailer de Oferta Cinemático",
@@ -567,3 +601,13 @@ export const COMMUNITY_PROMPTS: CommunityPrompt[] = [
       "Você é desenvolvedor de Vibe Coding. Contexto: [produto], [nicho], [tema], [cidade], [público]. Crie roteiro + código de mini aplicação web para demonstrar a tendência do momento e gerar leads.",
   },
 ];
+
+export const COMMUNITY_PROMPTS: CommunityPrompt[] = COMMUNITY_PROMPTS_RAW.map(
+  (item) => ({
+    ...item,
+    prompt: `${isVideoScriptPrompt(item.id) ? VIDEO_PROMPT_BASE : GENERIC_PROMPT_BASE}
+
+TAREFA ESPECÍFICA:
+${item.prompt}`,
+  }),
+);

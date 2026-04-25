@@ -12,6 +12,7 @@ import ShopHero from "@/components/ShopHero";
 import ShopBannerHero from "@/components/ShopBannerHero";
 import TreinamentosCardsGrid from "@/components/TreinamentosCardsGrid";
 import ShopPasswordGate from "@/components/ShopPasswordGate";
+import ShopHeaderMenu from "@/components/ShopHeaderMenu";
 
 type BonusItem = {
   id: string;
@@ -29,7 +30,7 @@ const bonusItems: BonusItem[] = [
     description:
       "Preencha os campos e gere um prompt completo para o Gemini criar sua página de vendas do zero.",
     cta: "Gerar agora",
-    href: "/prompt-pagina-de-vendas",
+    href: "/prompt-pagina-de-vendas?from=shop",
     icon: LayoutTemplate,
   },
   {
@@ -47,7 +48,7 @@ const bonusItems: BonusItem[] = [
     description:
       "Prompts prontos para criação de páginas, campanhas e estrutura de conteúdo com IA.",
     cta: "Abrir prompts",
-    href: "/prompts",
+    href: "/prompts?from=shop",
     icon: Sparkles,
   },
   {
@@ -56,7 +57,7 @@ const bonusItems: BonusItem[] = [
     description:
       "Preencha uma vez e nunca mais explique seu negócio para a IA. Cole no ChatGPT e comece a trabalhar.",
     cta: "Acessar kit",
-    href: "/kit-contexto",
+    href: "/kit-contexto?from=shop",
     icon: Layers,
   },
 ];
@@ -73,6 +74,8 @@ export default function ShopPage() {
   return (
     <ShopPasswordGate>
     <main className="min-h-screen bg-[#1f1f1d] text-[#e6e2d9]">
+      <ShopHeaderMenu />
+
       {/* Botão flutuante Instagram */}
       <Link
         href="https://www.instagram.com/alexandredpaula/"

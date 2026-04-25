@@ -1,7 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
-import { BadgeCheck, Check, Copy, ChevronRight } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { ArrowLeft, BadgeCheck, Check, Copy, ChevronRight } from "lucide-react";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -388,6 +390,11 @@ function CopyButton({ text }: { text: string }) {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function KitContextoPage() {
+  const searchParams = useSearchParams();
+  const from = searchParams.get("from");
+  const backHref = from === "comunidade" ? "/comunidade?view=chat" : "/shop";
+  const backLabel =
+    from === "comunidade" ? "Voltar para a Comunidade" : "Voltar para a Shop";
   const [form, setForm] = useState<FormData>(emptyForm);
   const [activeStep, setActiveStep] = useState<StepId>("empresa");
 
@@ -413,7 +420,15 @@ export default function KitContextoPage() {
 
       {/* Hero */}
       <section className="mx-auto w-full max-w-[1140px] px-4 pb-8 pt-10 sm:px-6 sm:pt-14 lg:px-8 lg:pt-16">
-        <div className="rounded-[30px] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] p-6 shadow-[0_30px_120px_-75px_rgba(0,0,0,0.95)] sm:p-8 lg:p-10">
+        <div className="flex items-start gap-3 sm:gap-4">
+          <Link
+            href={backHref}
+            aria-label={backLabel}
+            className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-white/12 bg-white/[0.03] text-[#d7d3cb] transition-colors hover:border-white/22 hover:bg-white/[0.06] hover:text-[#ebe7df]"
+          >
+            <ArrowLeft size={22} />
+          </Link>
+          <div className="flex-1 rounded-[30px] border border-white/10 bg-[linear-gradient(145deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] p-6 shadow-[0_30px_120px_-75px_rgba(0,0,0,0.95)] sm:p-8 lg:p-10">
           <span className="inline-flex items-center gap-2 rounded-full border border-[#f47b4f]/45 bg-[#f47b4f]/16 px-3 py-1.5 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-[#ffd8c7]">
             <BadgeCheck size={14} />
             Grow+Studio
@@ -447,6 +462,7 @@ export default function KitContextoPage() {
               </p>
             </div>
           </div>
+        </div>
         </div>
       </section>
 
