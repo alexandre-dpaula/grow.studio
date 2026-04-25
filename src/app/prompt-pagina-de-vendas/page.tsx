@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import {
   ArrowLeft,
   BadgeCheck,
@@ -916,8 +915,11 @@ function StepMensagem({
 }
 
 export default function PromptPaginaDeVendasPage() {
-  const searchParams = useSearchParams();
-  const from = searchParams.get("from");
+  const [from, setFrom] = useState<string | null>(null);
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setFrom(params.get("from"));
+  }, []);
   const backHref = from === "comunidade" ? "/comunidade?view=chat" : "/shop";
   const backLabel =
     from === "comunidade" ? "Voltar para a Comunidade" : "Voltar para a Shop";

@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { ArrowLeft, BadgeCheck, Check, Copy, ChevronRight } from "lucide-react";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -390,8 +389,11 @@ function CopyButton({ text }: { text: string }) {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function KitContextoPage() {
-  const searchParams = useSearchParams();
-  const from = searchParams.get("from");
+  const [from, setFrom] = useState<string | null>(null);
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setFrom(params.get("from"));
+  }, []);
   const backHref = from === "comunidade" ? "/comunidade?view=chat" : "/shop";
   const backLabel =
     from === "comunidade" ? "Voltar para a Comunidade" : "Voltar para a Shop";

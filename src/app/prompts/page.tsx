@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { ArrowLeft, BadgeCheck, Sparkles, Copy } from "lucide-react";
 import { COMMUNITY_PROMPTS } from "@/data/community-prompts";
 import PromptCardsGrid from "@/components/PromptCardsGrid";
@@ -462,8 +461,11 @@ function CopyButton({ text }: { text: string }) {
 const TAB_IDS = allBlocks.map((b) => b.id);
 
 export default function PromptsPage() {
-  const searchParams = useSearchParams();
-  const from = searchParams.get("from");
+  const [from, setFrom] = useState<string | null>(null);
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setFrom(params.get("from"));
+  }, []);
   const backHref = from === "comunidade" ? "/comunidade?view=chat" : "/shop";
   const backLabel =
     from === "comunidade" ? "Voltar para a Comunidade" : "Voltar para a Shop";
