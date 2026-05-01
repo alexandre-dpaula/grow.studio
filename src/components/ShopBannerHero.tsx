@@ -1,184 +1,73 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowDown, MousePointerClick } from "lucide-react";
 
-const WA = "5527998721786";
-
-const slides = [
-  {
-    tag: "01",
-    service: "Gravação de Cursos",
-    headline: "Seu conhecimento merece uma produção à altura.",
-    sub: "Transformamos o que você sabe em um curso profissional, com captação, edição e entrega pronta para vender.",
-    cta: "Quero gravar meu curso",
-    href: `https://wa.me/${WA}?text=${encodeURIComponent("Olá Alexandre Dpaula! Vi a Grow+Studio e quero transformar meu conhecimento em um curso profissional. Como funciona o processo de gravação?")}`,
-    image: "/cursos.jpg",
-  },
-  {
-    tag: "02",
-    service: "Criação de Criativos",
-    headline: "Criativo ruim custa caro. Criativo certo vende.",
-    sub: "Peças visuais estratégicas para tráfego pago, redes sociais e campanhas. Feitas para parar o scroll e converter.",
-    cta: "Quero criativos que convertem",
-    href: `https://wa.me/${WA}?text=${encodeURIComponent("Olá Alexandre Dpaula! Preciso de criativos que realmente vendam para tráfego pago e redes sociais. Quero saber mais sobre o trabalho de vocês!")}`,
-    image: "/criativos.jpg",
-  },
-  {
-    tag: "03",
-    service: "Páginas de Vendas",
-    headline: "Uma página certa pode mudar seu faturamento este mês.",
-    sub: "Páginas de vendas com estrutura persuasiva, copy profissional e design que guia o visitante direto para o botão de compra.",
-    cta: "Quero minha página de vendas",
-    href: `https://wa.me/${WA}?text=${encodeURIComponent("Olá Alexandre Dpaula! Quero uma página de vendas profissional para o meu produto. Como a Grow+Studio pode me ajudar?")}`,
-    image: "/lp.jpg",
-  },
-];
+const WHATSAPP_GROUP_URL =
+  "https://chat.whatsapp.com/Jf0qePzQfURKwmML6gYC30?mode=gi_t";
 
 export default function ShopBannerHero() {
-  const [current, setCurrent] = useState(0);
-  const [dir, setDir] = useState(1);
-
-  useEffect(() => {
-    const t = setInterval(() => {
-      setDir(1);
-      setCurrent((i) => (i + 1) % slides.length);
-    }, 8000);
-    return () => clearInterval(t);
-  }, []);
-
-  function goTo(idx: number) {
-    setDir(idx > current ? 1 : -1);
-    setCurrent(idx);
-  }
-
-  const slide = slides[current];
-
   return (
-    /* Safari: usar -webkit-fill-available via style inline para min-height */
-    <section
-      className="relative flex w-full flex-col overflow-hidden bg-[#141412]"
-      style={{ minHeight: "100svh" }}
-    >
-      {/* Background image — crossfade */}
-      <AnimatePresence mode="sync">
-        <motion.div
-          key={current}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.9 }}
-          className="absolute inset-0 z-0"
-        >
-          <Image
-            src={slide.image}
-            alt=""
-            fill
-            className="object-cover object-center"
-            priority
-          />
-          {/* Gradiente mais denso em baixo para o copy respirar */}
-          <div className="absolute inset-0 bg-linear-to-b from-[#141412]/70 via-[#141412]/60 to-[#141412]/92" />
-        </motion.div>
-      </AnimatePresence>
-
-      {/* Glow laranja topo */}
-      <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_80%_40%_at_50%_0%,rgba(244,123,79,0.13),transparent_60%)]" />
-
-      {/* ── Tabs — sempre visíveis, scroll horizontal no mobile ── */}
-      <div className="relative z-10 border-b border-white/10">
-        <div className="flex w-full overflow-x-auto" style={{ WebkitOverflowScrolling: "touch" }}>
-          {slides.map((s, i) => (
-            <button
-              key={i}
-              onClick={() => goTo(i)}
-              className={`relative flex shrink-0 flex-col gap-1 px-5 py-4 text-left transition-colors duration-200 sm:flex-1 sm:px-6 sm:py-5 ${
-                i === current ? "text-[#f3efe7]" : "text-[#4a4845] hover:text-[#8a8680]"
-              }`}
-            >
-              <span className="text-[0.55rem] font-bold uppercase tracking-[0.2em] text-[#f47b4f]/80">
-                {s.tag}
-              </span>
-              <span className="whitespace-nowrap text-[0.75rem] font-bold uppercase leading-tight tracking-wide sm:text-[0.82rem]">
-                {s.service}
-              </span>
-              {/* Barra ativa */}
-              <span
-                className={`absolute bottom-0 left-0 h-0.5 w-full rounded-full bg-[#f47b4f] transition-opacity duration-300 ${
-                  i === current ? "opacity-100" : "opacity-0"
-                }`}
-              />
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* ── Copy — centro vertical ── */}
-      <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 pb-8 pt-10 text-center sm:px-10 sm:pb-12 sm:pt-16 lg:px-16">
-        <AnimatePresence mode="wait" custom={dir}>
-          <motion.div
-            key={current}
-            custom={dir}
-            initial={{ opacity: 0, y: dir * 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: dir * -20 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="flex w-full max-w-2xl flex-col items-center"
-          >
-            {/* Eyebrow */}
-            <span className="inline-flex items-center gap-2 rounded-full border border-[#f47b4f]/35 bg-[#f47b4f]/10 px-3 py-1 text-[0.65rem] font-bold uppercase tracking-widest text-[#ffd8c7]">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#f47b4f]" />
-              {slide.service}
-            </span>
-
-            {/* Headline — fluido, nunca vai estourar */}
-            <h1 className="mt-5 w-full font-serif text-[clamp(1.75rem,6vw,4.5rem)] font-bold uppercase leading-[1.05] tracking-tight text-[#f3efe7]">
-              {slide.headline}
+    <section className="relative overflow-hidden border-b border-black/10 bg-[#ece9e1]">
+      <div className="mx-auto w-full max-w-[1820px] px-5 pb-0 pt-9 sm:px-8 sm:pb-0 sm:pt-12 lg:px-12 lg:pb-0 lg:pt-14">
+        <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-14">
+          <div className="mt-4 max-w-[700px] px-2 sm:mt-6 sm:px-4 lg:mt-8 lg:px-0">
+            <h1 className="font-heading text-[clamp(2rem,8.2vw,3.4rem)] leading-[0.97] tracking-tight text-[#0e0e0d]">
+              Domine a <span className="whitespace-nowrap text-[#d97757]">melhor IA</span>
+              <br />
+              para negócios
             </h1>
 
-            {/* Sub */}
-            <p className="mt-4 w-full max-w-md text-[0.9rem] leading-[1.65] text-[#a9a59d] sm:text-[1rem]">
-              {slide.sub}
+            <div className="mt-4 flex items-center gap-3 sm:gap-4">
+              <Image
+                src="/claude-logo.svg"
+                alt="Claude logo"
+                width={88}
+                height={88}
+                className="h-14 w-14 shrink-0 sm:h-12 sm:w-12 lg:h-[62px] lg:w-[62px]"
+              />
+              <p className="font-serif text-[clamp(3.6rem,14vw,5rem)] font-semibold leading-none tracking-tight text-[#0f0f0f]">
+                Claude
+              </p>
+            </div>
+
+            <p className="mt-6 max-w-[31ch] text-[clamp(1rem,4.9vw,1.35rem)] leading-[1.14] text-[#171715]">
+              Não é um curso de IA genérico. É um treinamento prático para você aprender
+              a ferramenta que está substituindo equipes inteiras dentro de empresas.
             </p>
 
-            {/* CTA */}
-            <a
-              href={slide.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-8 inline-flex items-center gap-2.5 rounded-xl bg-[#f47b4f] px-6 py-3.5 text-[0.88rem] font-bold uppercase tracking-wide text-[#1a1916] shadow-[0_8px_32px_rgba(244,123,79,0.35)] transition-all active:scale-95 hover:bg-[#f69069] sm:px-7 sm:py-4"
-            >
-              {slide.cta}
-              <ArrowRight size={15} />
-            </a>
-          </motion.div>
-        </AnimatePresence>
-      </div>
+            <div className="mt-7 flex w-full max-w-[560px] flex-col gap-3">
+              <a
+                href={WHATSAPP_GROUP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex w-full items-center justify-center gap-2 border border-[#df7b5b] bg-[#df7b5b] px-3.5 py-2 text-[0.88rem] font-medium text-[#ffe2d3] transition-colors hover:bg-[#d86e4d] lg:px-4 lg:py-2.5 lg:text-[1.05rem]"
+              >
+                <MousePointerClick size={18} aria-hidden="true" />
+                Garantir minha vaga
+              </a>
 
-      {/* ── Progress bars — canto inferior ── */}
-      <div className="relative z-10 flex w-full gap-1.5 px-6 pb-8 sm:px-10">
-        {slides.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => goTo(i)}
-            className="relative h-0.75 flex-1 overflow-hidden rounded-full bg-white/15"
-          >
-            {i === current && (
-              <motion.span
-                key={current}
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 8, ease: "linear" }}
-                className="absolute inset-0 origin-left rounded-full bg-[#f47b4f]"
-              />
-            )}
-            {i < current && (
-              <span className="absolute inset-0 rounded-full bg-[#f47b4f]/45" />
-            )}
-          </button>
-        ))}
+              <a
+                href={WHATSAPP_GROUP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex w-full items-center justify-center gap-2 border-2 border-[#141412] bg-transparent px-3.5 py-2 text-[0.88rem] font-medium text-[#141412] transition-colors hover:bg-black/5 lg:px-4 lg:py-2.5 lg:text-[1.05rem]"
+              >
+                O que vou aprender
+                <ArrowDown size={16} />
+              </a>
+            </div>
+          </div>
+
+          <div
+            className="relative min-h-[360px] overflow-hidden bg-cover bg-center bg-no-repeat sm:min-h-[460px] lg:min-h-[700px]"
+            style={{
+              backgroundImage:
+                "url('/hf_20260501_201750_6423071f-f056-4021-9be0-8cef908deebe.png')",
+            }}
+            aria-label="Visual do treinamento"
+          />
+        </div>
       </div>
     </section>
   );
