@@ -45,7 +45,7 @@ const PODCAST_CARD_SOON_2 =
 const PODCAST_CARD_SOON_3 =
   "/hf_20260313_140155_9f1bc704-126c-461a-ae1a-9c42d5510c77.jpeg";
 const COMMUNITY_CHECKOUT_URL =
-  "https://checkout.infinitepay.io/qt-sala01-stageone/3obvvPOUZV";
+  "https://checkout.infinitepay.io/qt-sala01-stageone/rVF2eDjNx";
 
 const bonusItems: BonusItem[] = [
   {
