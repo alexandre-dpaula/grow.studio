@@ -15,10 +15,13 @@ import {
   Menu,
   MessageSquare,
   Mic2,
+  Moon,
   Plus,
-  Share2,
+  Sparkles,
+  Sun,
 } from "lucide-react";
 import CommunityAgentChat from "@/components/CommunityAgentChat";
+import ClaudeSkillsGrid from "@/components/ClaudeSkillsGrid";
 import CommunityConversationsList from "@/components/CommunityConversationsList";
 import CommunityRecentsList from "@/components/CommunityRecentsList";
 import CommunityUserProfile from "@/components/CommunityUserProfile";
@@ -28,8 +31,35 @@ import TreinamentosCardsGrid from "@/components/TreinamentosCardsGrid";
 import { COMMUNITY_PROMPTS } from "@/data/community-prompts";
 
 type PageProps = {
-  searchParams: Promise<{ view?: string; id?: string; lang?: string }>;
+  searchParams: Promise<{
+    view?: string;
+    id?: string;
+    lang?: string;
+    theme?: string;
+  }>;
 };
+
+type ThemeMode = "dark" | "light";
+
+function withCommunityTheme(href: string, theme: ThemeMode) {
+  if (href.startsWith("http")) {
+    return href;
+  }
+
+  const [pathAndQuery, hashFragment] = href.split("#");
+  const [pathname, queryString] = pathAndQuery.split("?");
+  const params = new URLSearchParams(queryString ?? "");
+
+  if (theme === "light") {
+    params.set("theme", "light");
+  } else {
+    params.delete("theme");
+  }
+
+  const nextQueryString = params.toString();
+  const hash = hashFragment ? `#${hashFragment}` : "";
+  return `${pathname}${nextQueryString ? `?${nextQueryString}` : ""}${hash}`;
+}
 
 const sidebarMainItems = [
   { label: "Novo bate-papo", icon: Plus, href: "/comunidade?view=chat" },
@@ -46,6 +76,7 @@ const sidebarSecondaryItems = [
     href: "https://drive.google.com/uc?export=download&id=1vTArDG5vreAP7UvDnZpnZ6DKMKuOe5Wo",
   },
   { label: "Podcast", icon: Mic2, href: "/comunidade?view=podcast" },
+  { label: "Skills", icon: Sparkles, href: "/comunidade?view=skills" },
   { label: "Pack de Prompts", icon: AppWindow, href: "/prompts?from=comunidade" },
   { label: "Projetos", icon: Boxes, href: "/comunidade?view=projetos" },
 ];
@@ -106,12 +137,13 @@ export const metadata: Metadata = {
 };
 
 export default async function ComunidadePage({ searchParams }: PageProps) {
-  const { view, id, lang } = await searchParams;
+  const { view, id, lang, theme } = await searchParams;
   const isPromptsView = view === "prompts";
   const isConversationsView = view === "conversas";
   const isTrainingsView = view === "treinamentos";
   const isProjectsView = view === "projetos";
   const isPodcastView = view === "podcast";
+  const isSkillsView = view === "skills";
   const isSettingsView = view === "configuracoes";
   const isLanguageView = view === "idioma";
   const isUpgradeView = view === "upgrade";
@@ -122,6 +154,7 @@ export default async function ComunidadePage({ searchParams }: PageProps) {
     !isConversationsView &&
     !isProjectsView &&
     !isPodcastView &&
+    !isSkillsView &&
     !isTrainingsView &&
     !isSettingsView &&
     !isLanguageView &&
@@ -129,9 +162,32 @@ export default async function ComunidadePage({ searchParams }: PageProps) {
   const activeConversationId =
     typeof id === "string" && id.trim().length > 0 ? id : null;
   const activeLanguage = lang === "en" ? "en" : "pt";
+  const activeTheme: ThemeMode = theme === "light" ? "light" : "dark";
+  const isLightTheme = activeTheme === "light";
+  const nextTheme: ThemeMode = isLightTheme ? "dark" : "light";
+  const toggleThemeParams = new URLSearchParams();
+
+  if (typeof view === "string" && view.trim().length > 0) {
+    toggleThemeParams.set("view", view);
+  }
+  if (typeof id === "string" && id.trim().length > 0) {
+    toggleThemeParams.set("id", id);
+  }
+  if (typeof lang === "string" && lang.trim().length > 0) {
+    toggleThemeParams.set("lang", lang);
+  }
+  if (nextTheme === "light") {
+    toggleThemeParams.set("theme", "light");
+  }
+
+  const toggleThemeHref = `/comunidade${toggleThemeParams.toString() ? `?${toggleThemeParams.toString()}` : ""}`;
 
   return (
-    <main className="h-screen overflow-hidden bg-[#1f1f1d] text-[#d9d6ce]">
+    <main
+      className={`h-screen overflow-hidden ${
+        isLightTheme ? "bg-[#EFEDE8] text-[#1A1A18]" : "bg-[#1f1f1d] text-[#d9d6ce]"
+      }`}
+    >
       <input
         id="community-sidebar-toggle"
         type="checkbox"
@@ -140,32 +196,60 @@ export default async function ComunidadePage({ searchParams }: PageProps) {
 
       <label
         htmlFor="community-sidebar-toggle"
-        className="pointer-events-none fixed inset-0 z-30 bg-black/50 opacity-0 transition-opacity peer-checked:pointer-events-auto peer-checked:opacity-100 md:hidden"
+        className={`pointer-events-none fixed inset-0 z-30 opacity-0 transition-opacity peer-checked:pointer-events-auto peer-checked:opacity-100 md:hidden ${
+          isLightTheme ? "bg-[#1A1A18]/35" : "bg-black/50"
+        }`}
       />
 
-      <aside className="fixed inset-y-0 left-0 z-40 flex h-screen w-[300px] -translate-x-full flex-col overflow-hidden border-r border-white/10 bg-[#1d1d1b] transition-transform duration-200 peer-checked:translate-x-0 md:translate-x-0">
-          <div className="flex items-center gap-2 border-b border-white/8 px-4 py-4">
+      <aside
+        className={`fixed inset-y-0 left-0 z-40 flex h-screen w-[300px] -translate-x-full flex-col overflow-hidden border-r transition-transform duration-200 peer-checked:translate-x-0 md:translate-x-0 ${
+          isLightTheme
+            ? "border-[#E0DDD8] bg-[#F8F7F4]"
+            : "border-white/10 bg-[#1d1d1b]"
+        }`}
+      >
+          <div
+            className={`flex items-center gap-2 border-b px-4 py-4 ${
+              isLightTheme ? "border-[#E0DDD8]" : "border-white/8"
+            }`}
+          >
             <label
               htmlFor="community-sidebar-toggle"
-              className="inline-flex h-7 w-7 cursor-pointer items-center justify-center rounded-md border border-white/10 text-white/75 md:hidden"
+              className={`inline-flex h-7 w-7 cursor-pointer items-center justify-center rounded-md border md:hidden ${
+                isLightTheme
+                  ? "border-[#D8D5D0] text-[#1A1A18] hover:bg-[#ECEAE6]"
+                  : "border-white/10 text-white/75"
+              }`}
             >
               <Menu size={14} />
             </label>
             <button
               type="button"
-              className="hidden h-7 w-7 items-center justify-center rounded-md border border-white/10 text-white/75 md:inline-flex"
+              className={`hidden h-7 w-7 items-center justify-center rounded-md border md:inline-flex ${
+                isLightTheme
+                  ? "border-[#D8D5D0] text-[#1A1A18] hover:bg-[#ECEAE6]"
+                  : "border-white/10 text-white/75"
+              }`}
             >
               <Menu size={14} />
             </button>
             <button
               type="button"
-              className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-white/10 text-white/75"
+              className={`inline-flex h-7 w-7 items-center justify-center rounded-md border ${
+                isLightTheme
+                  ? "border-[#D8D5D0] text-[#1A1A18] hover:bg-[#ECEAE6]"
+                  : "border-white/10 text-white/75"
+              }`}
             >
               <ArrowLeft size={14} />
             </button>
             <button
               type="button"
-              className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-white/10 text-white/75"
+              className={`inline-flex h-7 w-7 items-center justify-center rounded-md border ${
+                isLightTheme
+                  ? "border-[#D8D5D0] text-[#1A1A18] hover:bg-[#ECEAE6]"
+                  : "border-white/10 text-white/75"
+              }`}
             >
               <ArrowRight size={14} />
             </button>
@@ -181,16 +265,23 @@ export default async function ComunidadePage({ searchParams }: PageProps) {
                   return (
                     <Link
                       key={item.label}
-                      href={item.href}
+                      href={withCommunityTheme(item.href, activeTheme)}
                       target={item.href.startsWith("http") ? "_blank" : undefined}
                       rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
                       className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-[0.93rem] transition-colors ${
                         isActive
-                          ? "bg-black/55 text-[#e2dfd7]"
-                          : "text-[#d6d3cb] hover:bg-white/6"
+                          ? isLightTheme
+                            ? "bg-[#ECEAE6] text-[#1A1A18]"
+                            : "bg-black/55 text-[#e2dfd7]"
+                          : isLightTheme
+                            ? "text-[#1A1A18] hover:bg-[#ECEAE6]"
+                            : "text-[#d6d3cb] hover:bg-white/6"
                       }`}
                     >
-                      <Icon size={15} className="text-white/70" />
+                      <Icon
+                        size={15}
+                        className={isLightTheme ? "text-[#1A1A18]" : "text-white/70"}
+                      />
                       <span>{item.label}</span>
                     </Link>
                   );
@@ -216,20 +307,28 @@ export default async function ComunidadePage({ searchParams }: PageProps) {
                   (item.label === "Conversas" && isConversationsView) ||
                   (item.label === "Treinamentos" && isTrainingsView) ||
                   (item.label === "Podcast" && isPodcastView) ||
+                  (item.label === "Skills" && isSkillsView) ||
                   (item.label === "Projetos" && isProjectsView);
 
                 if (item.href) {
                   return (
                     <Link
                       key={item.label}
-                      href={item.href}
+                      href={withCommunityTheme(item.href, activeTheme)}
                       className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-[0.93rem] transition-colors ${
                         isActive
-                          ? "bg-black/55 text-[#e2dfd7]"
-                          : "text-[#bebbb4] hover:bg-white/6"
+                          ? isLightTheme
+                            ? "bg-[#ECEAE6] text-[#1A1A18]"
+                            : "bg-black/55 text-[#e2dfd7]"
+                          : isLightTheme
+                            ? "text-[#1A1A18] hover:bg-[#ECEAE6]"
+                            : "text-[#bebbb4] hover:bg-white/6"
                       }`}
                     >
-                      <Icon size={15} className="text-white/60" />
+                      <Icon
+                        size={15}
+                        className={isLightTheme ? "text-[#1A1A18]" : "text-white/60"}
+                      />
                       <span>{item.label}</span>
                     </Link>
                   );
@@ -251,16 +350,25 @@ export default async function ComunidadePage({ searchParams }: PageProps) {
           </div>
 
           <div className="flex-1 overflow-y-auto overscroll-contain px-4 pb-4">
-            <p className="px-3 pb-2 text-[0.8rem] uppercase tracking-[0.12em] text-white/45">
+            <p
+              className={`px-3 pb-2 text-[0.8rem] uppercase tracking-[0.12em] ${
+                isLightTheme ? "text-[#1A1A18]" : "text-white/45"
+              }`}
+            >
               Recentes
             </p>
             <CommunityRecentsList
               activeConversationId={isThreadView ? activeConversationId : null}
+              theme={activeTheme}
             />
           </div>
 
-          <div className="border-t border-white/8 px-4 py-4">
-            <CommunityUserProfile profile={communityUserProfile} />
+          <div
+            className={`border-t px-4 py-4 ${
+              isLightTheme ? "border-[#E0DDD8]" : "border-white/8"
+            }`}
+          >
+            <CommunityUserProfile profile={communityUserProfile} theme={activeTheme} />
           </div>
         </aside>
 
@@ -269,11 +377,19 @@ export default async function ComunidadePage({ searchParams }: PageProps) {
             <div className="inline-flex items-center gap-2 md:hidden">
               <label
                 htmlFor="community-sidebar-toggle"
-                className="inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-md border border-white/10 text-white/75"
+                className={`inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-md border ${
+                  isLightTheme
+                    ? "border-[#D8D5D0] text-[#1A1A18] hover:bg-[#ECEAE6]"
+                    : "border-white/10 text-white/75"
+                }`}
               >
                 <Menu size={16} />
               </label>
-              <p className="text-[0.88rem] font-medium text-[#d8d4cc]">
+              <p
+                className={`text-[0.88rem] font-medium ${
+                  isLightTheme ? "text-[#1A1A18]" : "text-[#d8d4cc]"
+                }`}
+              >
                 {isThreadView
                   ? "Conversa"
                   : isPromptsView
@@ -282,6 +398,8 @@ export default async function ComunidadePage({ searchParams }: PageProps) {
                       ? "Treinamentos"
                     : isPodcastView
                       ? "Podcast"
+                    : isSkillsView
+                      ? "Skills"
                     : isProjectsView
                       ? "Projetos"
                     : isConversationsView
@@ -300,47 +418,91 @@ export default async function ComunidadePage({ searchParams }: PageProps) {
               {isThreadView ? (
                 <button
                   type="button"
-                  className="inline-flex items-center gap-2 rounded-lg px-2 py-1 text-[0.9rem] text-[#d6d2cb] transition-colors hover:bg-white/6"
+                  className={`inline-flex items-center gap-2 rounded-lg px-2 py-1 text-[0.9rem] transition-colors ${
+                    isLightTheme
+                      ? "text-[#1A1A18] hover:bg-[#ECEAE6]"
+                      : "text-[#d6d2cb] hover:bg-white/6"
+                  }`}
                 >
                   Conversa
-                  <ChevronDown size={13} className="text-white/60" />
+                  <ChevronDown
+                    size={13}
+                    className={isLightTheme ? "text-[#1A1A18]" : "text-white/60"}
+                  />
                 </button>
               ) : isTrainingsView ? (
-                <p className="text-[0.9rem] text-[#d6d2cb]">Treinamentos</p>
+                <p className={`text-[0.9rem] ${isLightTheme ? "text-[#1A1A18]" : "text-[#d6d2cb]"}`}>Treinamentos</p>
               ) : isPodcastView ? (
-                <p className="text-[0.9rem] text-[#d6d2cb]">Podcast</p>
+                <p className={`text-[0.9rem] ${isLightTheme ? "text-[#1A1A18]" : "text-[#d6d2cb]"}`}>Podcast</p>
+              ) : isSkillsView ? (
+                <p className={`text-[0.9rem] ${isLightTheme ? "text-[#1A1A18]" : "text-[#d6d2cb]"}`}>Skills</p>
               ) : isPromptsView ? (
-                <p className="text-[0.9rem] text-[#d6d2cb]">Prompts</p>
+                <p className={`text-[0.9rem] ${isLightTheme ? "text-[#1A1A18]" : "text-[#d6d2cb]"}`}>Prompts</p>
               ) : isProjectsView ? (
-                <p className="text-[0.9rem] text-[#d6d2cb]">Projetos</p>
+                <p className={`text-[0.9rem] ${isLightTheme ? "text-[#1A1A18]" : "text-[#d6d2cb]"}`}>Projetos</p>
               ) : isConversationsView ? (
-                <p className="text-[0.9rem] text-[#d6d2cb]">Conversas</p>
+                <p className={`text-[0.9rem] ${isLightTheme ? "text-[#1A1A18]" : "text-[#d6d2cb]"}`}>Conversas</p>
               ) : isSettingsView ? (
-                <p className="text-[0.9rem] text-[#d6d2cb]">Configurações</p>
+                <p className={`text-[0.9rem] ${isLightTheme ? "text-[#1A1A18]" : "text-[#d6d2cb]"}`}>Configurações</p>
               ) : isLanguageView ? (
-                <p className="text-[0.9rem] text-[#d6d2cb]">Idioma</p>
+                <p className={`text-[0.9rem] ${isLightTheme ? "text-[#1A1A18]" : "text-[#d6d2cb]"}`}>Idioma</p>
               ) : isUpgradeView ? (
-                <p className="text-[0.9rem] text-[#d6d2cb]">Upgrade</p>
+                <p className={`text-[0.9rem] ${isLightTheme ? "text-[#1A1A18]" : "text-[#d6d2cb]"}`}>Upgrade</p>
               ) : (
-                <p className="text-[0.9rem] text-[#d6d2cb]">Grow Academy</p>
+                <span />
               )}
             </div>
 
-            <button
-              type="button"
-              className="inline-flex h-8 w-8 items-center justify-center rounded-md text-white/70 transition-colors hover:bg-white/6"
-            >
-              <Share2 size={16} />
-            </button>
+            <div className="inline-flex items-center gap-1.5">
+              <Link
+                href={toggleThemeHref}
+                aria-label={isLightTheme ? "Ativar modo escuro" : "Ativar modo claro"}
+                title={isLightTheme ? "Modo escuro" : "Modo claro"}
+                className={`group relative inline-flex h-8 w-[62px] items-center rounded-full border p-1 transition-all duration-200 ${
+                  isLightTheme
+                    ? "border-[#D8D5D0] bg-[#F5F4F0] hover:bg-[#ECEAE6]"
+                    : "border-white/12 bg-white/5 hover:bg-white/8"
+                }`}
+              >
+                <span
+                  className={`absolute left-[5px] top-1/2 -translate-y-1/2 transition-opacity ${
+                    isLightTheme ? "opacity-100" : "opacity-55 group-hover:opacity-80"
+                  }`}
+                >
+                  <Sun
+                    size={13}
+                    className={isLightTheme ? "text-[#1A1A18]" : "text-[#f2d48e]"}
+                  />
+                </span>
+                <span
+                  className={`absolute right-[5px] top-1/2 -translate-y-1/2 transition-opacity ${
+                    isLightTheme ? "opacity-55 group-hover:opacity-80" : "opacity-100"
+                  }`}
+                >
+                  <Moon
+                    size={13}
+                    className={isLightTheme ? "text-[#1A1A18]" : "text-[#d6d2cb]"}
+                  />
+                </span>
+                <span
+                  className={`h-6 w-6 rounded-full shadow-[0_2px_8px_rgba(0,0,0,0.2)] ring-1 transition-transform duration-200 ${
+                    isLightTheme
+                      ? "translate-x-0 bg-[#FFFFFF] ring-[#D8D5D0]"
+                      : "translate-x-[30px] bg-[#2a2a28] ring-white/15"
+                  }`}
+                />
+              </Link>
+            </div>
           </header>
 
           {isThreadView ? (
             <CommunityAgentChat
               mode="thread"
               conversationId={activeConversationId}
+              theme={activeTheme}
             />
           ) : isChatView ? (
-            <CommunityAgentChat mode="welcome" />
+            <CommunityAgentChat mode="welcome" theme={activeTheme} />
           ) : isSettingsView ? (
             <div className="flex-1 overflow-y-auto overscroll-contain px-4 pb-8 pt-8 md:px-10 md:pt-10">
               <div className="mx-auto w-full max-w-[920px]">
@@ -434,7 +596,7 @@ export default async function ComunidadePage({ searchParams }: PageProps) {
 
                 <div className="mt-5 flex flex-wrap items-center justify-end gap-2.5">
                   <Link
-                    href="/comunidade?view=chat"
+                    href={withCommunityTheme("/comunidade?view=chat", activeTheme)}
                     className="rounded-xl border border-white/12 px-4 py-2 text-[0.86rem] text-[#b5b2aa] transition-colors hover:bg-white/6"
                   >
                     Cancelar
@@ -464,7 +626,7 @@ export default async function ComunidadePage({ searchParams }: PageProps) {
 
                 <div className="mt-7 grid gap-4 sm:grid-cols-2">
                   <Link
-                    href="/comunidade?view=idioma&lang=pt"
+                    href={withCommunityTheme("/comunidade?view=idioma&lang=pt", activeTheme)}
                     className={`rounded-2xl border p-5 transition-colors ${
                       activeLanguage === "pt"
                         ? "border-[#c67652]/70 bg-[#2e2521]"
@@ -477,7 +639,7 @@ export default async function ComunidadePage({ searchParams }: PageProps) {
                     </p>
                   </Link>
                   <Link
-                    href="/comunidade?view=idioma&lang=en"
+                    href={withCommunityTheme("/comunidade?view=idioma&lang=en", activeTheme)}
                     className={`rounded-2xl border p-5 transition-colors ${
                       activeLanguage === "en"
                         ? "border-[#c67652]/70 bg-[#2e2521]"
@@ -553,7 +715,7 @@ export default async function ComunidadePage({ searchParams }: PageProps) {
 
                 <div className="mt-5 flex flex-wrap items-center justify-end gap-2.5">
                   <Link
-                    href="/comunidade?view=chat"
+                    href={withCommunityTheme("/comunidade?view=chat", activeTheme)}
                     className="rounded-xl border border-white/12 px-4 py-2 text-[0.86rem] text-[#b5b2aa] transition-colors hover:bg-white/6"
                   >
                     Voltar para comunidade
@@ -584,7 +746,29 @@ export default async function ComunidadePage({ searchParams }: PageProps) {
                 </p>
 
                 <div className="mt-8">
-                  <PromptCardsGrid prompts={COMMUNITY_PROMPTS} />
+                  <PromptCardsGrid
+                    prompts={COMMUNITY_PROMPTS}
+                    isLightTheme={isLightTheme}
+                  />
+                </div>
+              </div>
+            </div>
+          ) : isSkillsView ? (
+            <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-8 md:px-10 md:py-10">
+              <div className="mx-auto w-full max-w-[1180px]">
+                <p className={`text-xs uppercase tracking-[0.15em] ${isLightTheme ? "text-[#1A1A18]" : "text-[#a4a19b]"}`}>
+                  Biblioteca
+                </p>
+                <h1 className={`mt-3 font-serif text-3xl font-bold uppercase sm:text-4xl ${isLightTheme ? "text-[#1A1A18]" : "text-[#e1ddd6]"}`}>
+                  Skills
+                </h1>
+                <p className={`mt-4 max-w-2xl text-[0.92rem] ${isLightTheme ? "text-[#1A1A18]" : "text-[#b6b3ab]"}`}>
+                  Skills prontas para usar no Claude. Escolha uma skill, copie e
+                  cole no chat.
+                </p>
+
+                <div className="mt-8">
+                  <ClaudeSkillsGrid isLightTheme={isLightTheme} />
                 </div>
               </div>
             </div>
@@ -599,26 +783,16 @@ export default async function ComunidadePage({ searchParams }: PageProps) {
                 </p>
 
                 <div className="mt-6">
-                  <TreinamentosCardsGrid withReveal={false} />
+                  <TreinamentosCardsGrid
+                    withReveal={false}
+                    isLightTheme={isLightTheme}
+                  />
                 </div>
               </div>
             </div>
           ) : isPodcastView ? (
-            <div className="flex-1 overflow-y-auto overscroll-contain px-4 pb-8 pt-8 md:px-10 md:pt-10">
-              <div className="mx-auto w-full max-w-[1180px]">
-                <p className="text-xs uppercase tracking-[0.15em] text-[#a4a19b]">
-                  Comunidade
-                </p>
-                <h1 className="mt-3 font-serif text-3xl font-bold uppercase text-[#e1ddd6] sm:text-4xl">
-                  Podcast da Comunidade
-                </h1>
-                <p className="mt-4 max-w-2xl text-[0.92rem] text-[#b6b3ab]">
-                  Episódios exclusivos em layout visual estilo streaming, para
-                  você consumir insights práticos sobre IA, oferta e vendas.
-                </p>
-
-                <CommunityPodcastCards />
-              </div>
+            <div className="flex-1 overflow-y-auto overscroll-contain px-4 pb-8 pt-4 md:px-6 md:pt-5">
+              <CommunityPodcastCards className="mx-auto w-full max-w-[1380px]" />
             </div>
           ) : isProjectsView ? (
             <div className="flex-1 overflow-y-auto overscroll-contain px-4 pb-8 pt-8 md:px-10 md:pt-10">
@@ -730,7 +904,7 @@ export default async function ComunidadePage({ searchParams }: PageProps) {
                   </button>
                 </div>
 
-                <CommunityConversationsList />
+                <CommunityConversationsList theme={activeTheme} />
               </div>
             </div>
           ) : null}

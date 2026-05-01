@@ -14,11 +14,14 @@ import {
 
 type CommunityRecentsListProps = {
   activeConversationId?: string | null;
+  theme?: "dark" | "light";
 };
 
 export default function CommunityRecentsList({
   activeConversationId,
+  theme = "dark",
 }: CommunityRecentsListProps) {
+  const isLightTheme = theme === "light";
   const router = useRouter();
   const [conversations, setConversations] = useState<StoredConversation[]>([]);
   const [openedMenuConversationId, setOpenedMenuConversationId] = useState<string | null>(
@@ -103,13 +106,17 @@ export default function CommunityRecentsList({
     setOpenedMenuConversationId(null);
 
     if (activeConversationId === conversation.id) {
-      router.push("/comunidade?view=chat");
+      router.push(`/comunidade?view=chat${theme === "light" ? "&theme=light" : ""}`);
     }
   }
 
   if (!conversations.length) {
     return (
-      <p className="px-3 py-2 text-[0.82rem] text-[#8f8c86]">
+      <p
+        className={`px-3 py-2 text-[0.82rem] ${
+          isLightTheme ? "text-[#1A1A18]" : "text-[#8f8c86]"
+        }`}
+      >
         Nenhuma conversa ainda.
       </p>
     );
@@ -128,11 +135,15 @@ export default function CommunityRecentsList({
             data-recent-menu-root="true"
           >
             <Link
-              href={`/comunidade?view=thread&id=${conversation.id}`}
+              href={`/comunidade?view=thread&id=${conversation.id}${theme === "light" ? "&theme=light" : ""}`}
               className={`flex w-full items-center justify-between rounded-lg px-3 py-2 pr-10 text-left text-[0.9rem] transition-colors ${
                 isActive
-                  ? "bg-black/55 text-[#e2dfd7]"
-                  : "text-[#afaca6] hover:bg-white/6 hover:text-[#d6d3cb]"
+                  ? isLightTheme
+                    ? "bg-[#ECEAE6] text-[#1A1A18]"
+                    : "bg-black/55 text-[#e2dfd7]"
+                  : isLightTheme
+                    ? "text-[#1A1A18] hover:bg-[#ECEAE6] hover:text-[#1A1A18]"
+                    : "text-[#afaca6] hover:bg-white/6 hover:text-[#d6d3cb]"
               }`}
             >
               <span className="truncate">{conversation.title}</span>
@@ -146,7 +157,11 @@ export default function CommunityRecentsList({
                   current === conversation.id ? null : conversation.id,
                 )
               }
-              className={`absolute right-2 top-1/2 inline-flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-md text-white/65 transition-colors hover:bg-white/8 hover:text-white ${
+              className={`absolute right-2 top-1/2 inline-flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-md transition-colors ${
+                isLightTheme
+                  ? "text-[#1A1A18] hover:bg-[#ECEAE6] hover:text-[#1A1A18]"
+                  : "text-white/65 hover:bg-white/8 hover:text-white"
+              } ${
                 isActive || isMenuOpen
                   ? "opacity-100"
                   : "opacity-0 group-hover:opacity-100"
@@ -156,11 +171,21 @@ export default function CommunityRecentsList({
             </button>
 
             {isMenuOpen ? (
-              <div className="absolute right-2 top-[calc(100%+4px)] z-20 w-36 rounded-xl border border-white/12 bg-[#2a2a28] p-1.5 shadow-[0_18px_40px_-24px_rgba(0,0,0,0.9)]">
+              <div
+                className={`absolute right-2 top-[calc(100%+4px)] z-20 w-36 rounded-xl border p-1.5 shadow-[0_18px_40px_-24px_rgba(0,0,0,0.9)] ${
+                  isLightTheme
+                    ? "border-[#E0DDD8] bg-[#FFFFFF]"
+                    : "border-white/12 bg-[#2a2a28]"
+                }`}
+              >
                 <button
                   type="button"
                   onClick={() => handleRename(conversation)}
-                  className="w-full rounded-lg px-2.5 py-2 text-left text-[0.82rem] text-[#d7d3cb] transition-colors hover:bg-white/8"
+                  className={`w-full rounded-lg px-2.5 py-2 text-left text-[0.82rem] transition-colors ${
+                    isLightTheme
+                      ? "text-[#1A1A18] hover:bg-[#ECEAE6]"
+                      : "text-[#d7d3cb] hover:bg-white/8"
+                  }`}
                 >
                   Renomear
                 </button>

@@ -22,6 +22,7 @@ type CommunityUserProfileProps = {
     role: string;
     plan: string;
   };
+  theme?: "dark" | "light";
 };
 
 type ProfileMenuItem = {
@@ -65,9 +66,25 @@ const middleMenuItems = [
 
 export default function CommunityUserProfile({
   profile,
+  theme = "dark",
 }: CommunityUserProfileProps) {
+  const isLightTheme = theme === "light";
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
+
+  function withTheme(href: string) {
+    if (!href.startsWith("/")) {
+      return href;
+    }
+    const [pathname, queryString] = href.split("?");
+    const params = new URLSearchParams(queryString ?? "");
+    if (theme === "light") {
+      params.set("theme", "light");
+    } else {
+      params.delete("theme");
+    }
+    return `${pathname}${params.toString() ? `?${params.toString()}` : ""}`;
+  }
 
   useEffect(() => {
     function onClickOutside(event: MouseEvent) {
@@ -92,9 +109,15 @@ export default function CommunityUserProfile({
   return (
     <div ref={containerRef} className="relative">
       {isOpen ? (
-        <div className="absolute bottom-[calc(100%+10px)] left-0 right-0 rounded-3xl border border-white/15 bg-[#2b2b2a] p-4 shadow-[0_24px_70px_-30px_rgba(0,0,0,0.95)]">
-          <p className="truncate text-[0.82rem] text-[#a6a39d]">{profile.email}</p>
-          <p className="mt-1 text-[0.75rem] text-[#8f8c86]">{profile.contact}</p>
+        <div
+          className={`absolute bottom-[calc(100%+10px)] left-0 right-0 rounded-3xl border p-4 shadow-[0_24px_70px_-30px_rgba(0,0,0,0.95)] ${
+            isLightTheme
+              ? "border-[#E0DDD8] bg-[#FFFFFF]"
+              : "border-white/15 bg-[#2b2b2a]"
+          }`}
+        >
+          <p className={`truncate text-[0.82rem] ${isLightTheme ? "text-[#1A1A18]" : "text-[#a6a39d]"}`}>{profile.email}</p>
+          <p className={`mt-1 text-[0.75rem] ${isLightTheme ? "text-[#1A1A18]" : "text-[#8f8c86]"}`}>{profile.contact}</p>
 
           <div className="mt-3.5 space-y-1.5">
             {topMenuItems.map((item) => {
@@ -104,24 +127,34 @@ export default function CommunityUserProfile({
               return (
                 <Link
                   key={item.label}
-                  href={item.href}
+                  href={withTheme(item.href)}
                   onClick={() => setIsOpen(false)}
                   aria-label={`${item.label}: ${item.actionLabel}`}
-                  className="flex w-full items-center justify-between rounded-xl px-2 py-2 text-left text-[0.9rem] text-[#d4d0c8] transition-colors hover:bg-white/6"
+                  className={`flex w-full items-center justify-between rounded-xl px-2 py-2 text-left text-[0.9rem] transition-colors ${
+                    isLightTheme
+                      ? "text-[#1A1A18] hover:bg-[#ECEAE6]"
+                      : "text-[#d4d0c8] hover:bg-white/6"
+                  }`}
                 >
                   <span className="inline-flex items-center gap-2.5">
-                    <Icon size={16} className="text-white/70" />
+                    <Icon
+                      size={16}
+                      className={isLightTheme ? "text-[#1A1A18]" : "text-white/70"}
+                    />
                     {item.label}
                   </span>
                   {TrailingIcon ? (
-                    <TrailingIcon size={15} className="text-white/45" />
+                    <TrailingIcon
+                      size={15}
+                      className={isLightTheme ? "text-[#1A1A18]" : "text-white/45"}
+                    />
                   ) : null}
                 </Link>
               );
             })}
           </div>
 
-          <div className="my-3 border-t border-white/10" />
+          <div className={`my-3 border-t ${isLightTheme ? "border-[#ECEAE6]" : "border-white/10"}`} />
 
           <div className="space-y-1.5">
             {middleMenuItems.map((item) => {
@@ -130,13 +163,20 @@ export default function CommunityUserProfile({
               return (
                 <Link
                   key={item.label}
-                  href={item.href}
+                  href={withTheme(item.href)}
                   onClick={() => setIsOpen(false)}
                   aria-label={`${item.label}: ${item.actionLabel}`}
-                  className="flex w-full items-center justify-between rounded-xl px-2 py-2 text-left text-[0.9rem] text-[#d4d0c8] transition-colors hover:bg-white/6"
+                  className={`flex w-full items-center justify-between rounded-xl px-2 py-2 text-left text-[0.9rem] transition-colors ${
+                    isLightTheme
+                      ? "text-[#1A1A18] hover:bg-[#ECEAE6]"
+                      : "text-[#d4d0c8] hover:bg-white/6"
+                  }`}
                 >
                   <span className="inline-flex items-center gap-2.5">
-                    <Icon size={16} className="text-white/70" />
+                    <Icon
+                      size={16}
+                      className={isLightTheme ? "text-[#1A1A18]" : "text-white/70"}
+                    />
                     {item.label}
                   </span>
                 </Link>
@@ -144,30 +184,49 @@ export default function CommunityUserProfile({
             })}
           </div>
 
-          <div className="my-3 border-t border-white/10" />
+          <div className={`my-3 border-t ${isLightTheme ? "border-[#ECEAE6]" : "border-white/10"}`} />
 
           <button
             type="button"
-            className="flex w-full items-center gap-2.5 rounded-xl px-2 py-2 text-left text-[0.9rem] text-[#d4d0c8] transition-colors hover:bg-white/6"
+            className={`flex w-full items-center gap-2.5 rounded-xl px-2 py-2 text-left text-[0.9rem] transition-colors ${
+              isLightTheme
+                ? "text-[#1A1A18] hover:bg-[#ECEAE6]"
+                : "text-[#d4d0c8] hover:bg-white/6"
+            }`}
           >
-            <LogOut size={16} className="text-white/70" />
+            <LogOut
+              size={16}
+              className={isLightTheme ? "text-[#1A1A18]" : "text-white/70"}
+            />
             Sair
           </button>
         </div>
       ) : null}
 
-      <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/3 px-3 py-2.5">
+      <div
+        className={`flex items-center justify-between rounded-2xl border px-3 py-2.5 ${
+          isLightTheme
+            ? "border-[#E0DDD8] bg-[#FFFFFF]"
+            : "border-white/10 bg-white/3"
+        }`}
+      >
         <div className="flex min-w-0 items-center gap-2.5">
           <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#d2d2cd] text-[1.05rem] font-semibold text-[#2a2a28]">
             {profile.avatarInitial}
           </div>
           <div className="min-w-0">
-            <p className="truncate text-[0.92rem] font-semibold text-[#e4e0d8]">
+            <p className={`truncate text-[0.92rem] font-semibold ${isLightTheme ? "text-[#1A1A18]" : "text-[#e4e0d8]"}`}>
               {profile.name}
             </p>
             <div className="mt-0.5 inline-flex items-center gap-1.5">
-              <span className="text-[0.74rem] text-white/45">{profile.plan}</span>
-              <span className="rounded-full border border-white/16 bg-[#2a2a28] px-1.5 py-0.5 text-[0.62rem] text-[#cdc9c2]">
+              <span className={`text-[0.74rem] ${isLightTheme ? "text-[#1A1A18]" : "text-white/45"}`}>{profile.plan}</span>
+              <span
+                className={`rounded-full border px-1.5 py-0.5 text-[0.62rem] ${
+                  isLightTheme
+                    ? "border-[#D8D5D0] bg-[#F5F4F0] text-[#1A1A18]"
+                    : "border-white/16 bg-[#2a2a28] text-[#cdc9c2]"
+                }`}
+              >
                 {profile.role}
               </span>
             </div>
@@ -177,7 +236,11 @@ export default function CommunityUserProfile({
         <div className="ml-2 flex items-center gap-2">
           <button
             type="button"
-            className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-white/15 text-white/70 transition-colors hover:bg-white/6"
+            className={`inline-flex h-8 w-8 items-center justify-center rounded-md border transition-colors ${
+              isLightTheme
+                ? "border-[#D8D5D0] text-[#1A1A18] hover:bg-[#ECEAE6]"
+                : "border-white/15 text-white/70 hover:bg-white/6"
+            }`}
             aria-label="Baixar"
           >
             <Download size={14} />
@@ -185,7 +248,11 @@ export default function CommunityUserProfile({
           <button
             type="button"
             onClick={() => setIsOpen((prev) => !prev)}
-            className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-white/15 text-white/70 transition-colors hover:bg-white/6"
+            className={`inline-flex h-8 w-8 items-center justify-center rounded-md border transition-colors ${
+              isLightTheme
+                ? "border-[#D8D5D0] text-[#1A1A18] hover:bg-[#ECEAE6]"
+                : "border-white/15 text-white/70 hover:bg-white/6"
+            }`}
             aria-label="Abrir menu do perfil"
           >
             <ChevronsUpDown size={14} />

@@ -54,6 +54,7 @@ type AssistantResponseBlock =
 type CommunityAgentChatProps = {
   mode: "welcome" | "thread";
   conversationId?: string | null;
+  theme?: "dark" | "light";
 };
 
 const growIconMask = {
@@ -414,7 +415,9 @@ function parseAssistantBlocks(messageId: string, content: string): AssistantResp
 export default function CommunityAgentChat({
   mode,
   conversationId,
+  theme = "dark",
 }: CommunityAgentChatProps) {
+  const isLightTheme = theme === "light";
   const router = useRouter();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
@@ -430,6 +433,20 @@ export default function CommunityAgentChat({
     () => input.trim().length > 0 && !isSending,
     [input, isSending],
   );
+
+  function withTheme(href: string) {
+    if (!href.startsWith("/")) {
+      return href;
+    }
+    const [pathname, queryString] = href.split("?");
+    const params = new URLSearchParams(queryString ?? "");
+    if (theme === "light") {
+      params.set("theme", "light");
+    } else {
+      params.delete("theme");
+    }
+    return `${pathname}${params.toString() ? `?${params.toString()}` : ""}`;
+  }
 
   function persistConversation(
     targetConversationId: string,
@@ -636,7 +653,7 @@ export default function CommunityAgentChat({
         );
       }
       setInput("");
-      router.push(`/comunidade?view=thread&id=${newConversationId}`);
+      router.push(withTheme(`/comunidade?view=thread&id=${newConversationId}`));
       return;
     }
 
@@ -644,7 +661,7 @@ export default function CommunityAgentChat({
       forcedConversationId || conversationId || createId("conv");
 
     if (!conversationId) {
-      router.replace(`/comunidade?view=thread&id=${targetConversationId}`);
+      router.replace(withTheme(`/comunidade?view=thread&id=${targetConversationId}`));
     }
 
     const userMessage: ChatMessage = {
@@ -724,7 +741,11 @@ export default function CommunityAgentChat({
       >
         {mode === "welcome" ? (
           <div className="mx-auto flex h-full w-full max-w-[860px] flex-col items-center justify-center text-center">
-            <p className="mt-2 text-[0.82rem] uppercase tracking-[0.14em] text-[#bcb8b1] sm:text-[0.86rem]">
+            <p
+              className={`mt-2 text-[0.82rem] uppercase tracking-[0.14em] sm:text-[0.86rem] ${
+                isLightTheme ? "text-[#1A1A18]" : "text-[#bcb8b1]"
+              }`}
+            >
               <span
                 aria-hidden
                 className="mr-2 inline-block h-[15px] w-[15px] translate-y-[2px] bg-[#f47b4f]"
@@ -732,10 +753,18 @@ export default function CommunityAgentChat({
               />
               Bem-vindo à Comunidade
             </p>
-            <h1 className="mt-3 font-serif text-4xl font-medium text-[#d8d4cd] sm:text-5xl">
+            <h1
+              className={`mt-3 font-serif text-4xl font-medium sm:text-5xl ${
+                isLightTheme ? "text-[#1A1A18]" : "text-[#d8d4cd]"
+              }`}
+            >
               Grow Academy
             </h1>
-            <p className="mt-3 max-w-xl text-[0.96rem] text-[#a6a39d]">
+            <p
+              className={`mt-3 max-w-xl text-[0.96rem] ${
+                isLightTheme ? "text-[#1A1A18]" : "text-[#a6a39d]"
+              }`}
+            >
               Tire dúvidas sobre treinamentos, prompts e Vibe Coding com resposta
               prática em blocos.
             </p>
@@ -747,10 +776,17 @@ export default function CommunityAgentChat({
                 <button
                   key={item.label}
                   type="button"
-                  onClick={() => router.push(item.href)}
-                  className="inline-flex items-center gap-2 rounded-xl border border-white/12 bg-[#2a2a28] px-4 py-2 text-[0.88rem] text-[#cfcbc4] transition-colors hover:bg-[#31312f]"
+                  onClick={() => router.push(withTheme(item.href))}
+                  className={`inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-[0.88rem] transition-colors ${
+                    isLightTheme
+                      ? "border-[#D8D5D0] bg-[#FFFFFF] text-[#1A1A18] hover:bg-[#ECEAE6]"
+                      : "border-white/12 bg-[#2a2a28] text-[#cfcbc4] hover:bg-[#31312f]"
+                  }`}
                 >
-                  <Icon size={13} className="text-white/70" />
+                  <Icon
+                    size={13}
+                    className={isLightTheme ? "text-[#1A1A18]" : "text-white/70"}
+                  />
                   <span>{item.label}</span>
                 </button>
                 );
@@ -933,7 +969,11 @@ export default function CommunityAgentChat({
 
       <div
         aria-hidden
-        className="pointer-events-none fixed inset-x-0 bottom-0 z-20 h-44 bg-[linear-gradient(180deg,rgba(31,31,29,0)_0%,rgba(31,31,29,0.86)_45%,rgba(31,31,29,1)_100%)] md:left-[300px]"
+        className={`pointer-events-none fixed inset-x-0 bottom-0 z-20 h-44 md:left-[300px] ${
+          isLightTheme
+            ? "bg-[linear-gradient(180deg,rgba(239,237,232,0)_0%,rgba(239,237,232,0.9)_45%,rgba(239,237,232,1)_100%)]"
+            : "bg-[linear-gradient(180deg,rgba(31,31,29,0)_0%,rgba(31,31,29,0.86)_45%,rgba(31,31,29,1)_100%)]"
+        }`}
       />
 
       <form
@@ -944,7 +984,13 @@ export default function CommunityAgentChat({
         }}
       >
         <div className="mx-auto w-full max-w-[860px]">
-          <div className="rounded-[24px] border border-white/14 bg-[#2f2f2d]/92 px-4 py-3.5 shadow-[0_24px_70px_-40px_rgba(0,0,0,0.95)] backdrop-blur-lg supports-[backdrop-filter]:bg-[#2f2f2d]/82 md:px-5 md:py-4">
+          <div
+            className={`rounded-[24px] border px-4 py-3.5 shadow-[0_24px_70px_-40px_rgba(0,0,0,0.95)] backdrop-blur-lg md:px-5 md:py-4 ${
+              isLightTheme
+                ? "border-[#E0DDD8] bg-[#FFFFFF]/92 supports-[backdrop-filter]:bg-[#FFFFFF]/84"
+                : "border-white/14 bg-[#2f2f2d]/92 supports-[backdrop-filter]:bg-[#2f2f2d]/82"
+            }`}
+          >
             <label className="block">
               <span className="sr-only">Mensagem para o agente</span>
 	              <textarea
@@ -953,29 +999,41 @@ export default function CommunityAgentChat({
 	                onChange={(event) => setInput(event.target.value)}
 	                onKeyDown={handleTextareaKeyDown}
 	                placeholder="Pergunte sobre treinamentos, prompts, Vibe Coding ou peça código..."
-	                className="w-full resize-none bg-transparent text-[clamp(0.92rem,1vw,0.98rem)] text-[#bcb9b2] placeholder:text-[#a7a49e] outline-none"
+	                className={`w-full resize-none bg-transparent text-[clamp(0.92rem,1vw,0.98rem)] outline-none ${
+                    isLightTheme
+                      ? "text-[#1A1A18] placeholder:text-[#A0A09C]"
+                      : "text-[#bcb9b2] placeholder:text-[#a7a49e]"
+                  }`}
 	              />
 	            </label>
 
             <div className="mt-3.5 flex items-center justify-between">
               <button
                 type="button"
-                className="inline-flex h-7 w-7 items-center justify-center text-[#c7c4bd]"
+                className={`inline-flex h-7 w-7 items-center justify-center ${
+                  isLightTheme ? "text-[#1A1A18]" : "text-[#c7c4bd]"
+                }`}
                 aria-label="Adicionar arquivo"
               >
                 <Plus size={14} />
               </button>
 
-              <div className="flex items-center gap-3 text-[#b7b4ad]">
-                <span className="text-[0.84rem]">Agente Grow+</span>
-                <ChevronDown size={11} />
+              <div
+                className={`flex items-center gap-3 ${
+                  isLightTheme ? "text-[#1A1A18]" : "text-[#b7b4ad]"
+                }`}
+              >
                 <button
                   type="submit"
                   disabled={!canSend}
                   className={`inline-flex h-8 w-8 items-center justify-center rounded-full transition-colors ${
                     canSend
-                      ? "bg-[#f47b4f] text-[#1c1b18]"
-                      : "bg-[#5a5a58] text-[#1f1f1d]"
+                      ? isLightTheme
+                        ? "bg-[#CC5F4A] text-[#FFFFFF]"
+                        : "bg-[#f47b4f] text-[#1c1b18]"
+                      : isLightTheme
+                        ? "bg-[#D8D5D0] text-[#1A1A18]"
+                        : "bg-[#5a5a58] text-[#1f1f1d]"
                   }`}
                   aria-label="Enviar mensagem"
                 >
@@ -984,7 +1042,11 @@ export default function CommunityAgentChat({
               </div>
             </div>
           </div>
-          <p className="mt-2 text-center text-[0.7rem] text-[#8b8882]">
+          <p
+            className={`mt-2 text-center text-[0.7rem] ${
+              isLightTheme ? "text-[#1A1A18]" : "text-[#8b8882]"
+            }`}
+          >
             A IA da comunidade pode cometer erros. Revise sempre as respostas.
           </p>
         </div>

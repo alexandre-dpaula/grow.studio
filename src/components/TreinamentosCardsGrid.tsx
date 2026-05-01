@@ -11,6 +11,7 @@ import { TREINAMENTOS } from "@/data/treinamentos";
 
 type TreinamentosCardsGridProps = {
   withReveal?: boolean;
+  isLightTheme?: boolean;
 };
 
 const iconBySlug: Record<string, LucideIcon> = {
@@ -42,6 +43,7 @@ const cardHeroBySlug: Record<
 
 export default function TreinamentosCardsGrid({
   withReveal = true,
+  isLightTheme = false,
 }: TreinamentosCardsGridProps) {
   return (
     <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
@@ -51,7 +53,13 @@ export default function TreinamentosCardsGrid({
 
         const card = (
           <article className="h-full">
-            <figure className="relative aspect-video overflow-hidden rounded-2xl border border-white/12 bg-[#171715] shadow-[0_24px_70px_-40px_rgba(0,0,0,0.9)] transition-all duration-300 group-hover:-translate-y-1 group-hover:border-lime-300/35">
+            <figure
+              className={`relative aspect-video overflow-hidden rounded-2xl border shadow-[0_24px_70px_-40px_rgba(0,0,0,0.9)] transition-all duration-300 group-hover:-translate-y-1 ${
+                isLightTheme
+                  ? "border-[#E0DDD8] bg-[#FFFFFF] group-hover:border-[#C8C5C0]"
+                  : "border-white/12 bg-[#171715] group-hover:border-lime-300/35"
+              }`}
+            >
               {cardHero ? (
                 <>
                   <Image
@@ -72,10 +80,18 @@ export default function TreinamentosCardsGrid({
             </figure>
 
             <div className="mt-3 px-1">
-              <h2 className="text-[0.95rem] font-semibold uppercase leading-tight text-white">
+              <h2
+                className={`text-[0.95rem] font-semibold uppercase leading-tight ${
+                  isLightTheme ? "text-[#1A1A18]" : "text-white"
+                }`}
+              >
                 {treinamento.title}
               </h2>
-              <p className="mt-1.5 text-[0.78rem] leading-normal text-white/72">
+              <p
+                className={`mt-1.5 text-[0.78rem] leading-normal ${
+                  isLightTheme ? "text-[#1A1A18]" : "text-white/72"
+                }`}
+              >
                 {treinamento.cardDescription}
               </p>
             </div>

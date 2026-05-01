@@ -12,6 +12,7 @@ type PromptCard = {
 
 type PromptCardsGridProps = {
   prompts: PromptCard[];
+  isLightTheme?: boolean;
 };
 
 const FILTER_TAGS = ["Todos", "Imagem", "Video", "Web", "Estrategia"] as const;
@@ -67,7 +68,10 @@ function getPromptCategory(prompt: PromptCard): Exclude<PromptFilterTag, "Todos"
   return "Estrategia";
 }
 
-export default function PromptCardsGrid({ prompts }: PromptCardsGridProps) {
+export default function PromptCardsGrid({
+  prompts,
+  isLightTheme = false,
+}: PromptCardsGridProps) {
   const [copiedPromptId, setCopiedPromptId] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState<PromptFilterTag>("Todos");
   const [currentPage, setCurrentPage] = useState(1);
@@ -136,8 +140,12 @@ export default function PromptCardsGrid({ prompts }: PromptCardsGridProps) {
               onClick={() => setActiveFilter(tag)}
               className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[0.8rem] transition-colors ${
                 isActive
-                  ? "border-[#f47b4f]/55 bg-[#f47b4f] font-medium text-[#1f1f1d]"
-                  : "border-white/12 text-[#cbc7bf] hover:border-white/20 hover:bg-white/[0.05]"
+                  ? isLightTheme
+                    ? "border-[#CC5F4A] bg-[#CC5F4A] font-medium text-[#FFFFFF]"
+                    : "border-[#f47b4f]/55 bg-[#f47b4f] font-medium text-[#1f1f1d]"
+                  : isLightTheme
+                    ? "border-[#D8D5D0] text-[#1A1A18] hover:border-[#C8C5C0] hover:bg-[#ECEAE6]"
+                    : "border-white/12 text-[#cbc7bf] hover:border-white/20 hover:bg-white/[0.05]"
               }`}
             >
               {tag}
@@ -153,17 +161,25 @@ export default function PromptCardsGrid({ prompts }: PromptCardsGridProps) {
         return (
           <article
             key={item.id}
-            className="rounded-2xl border border-white/12 bg-[rgba(55,55,53,0.45)] p-5"
+            className={`rounded-2xl border p-5 ${
+              isLightTheme
+                ? "border-[#E0DDD8] bg-[#FFFFFF]"
+                : "border-white/12 bg-[rgba(55,55,53,0.45)]"
+            }`}
           >
-            <h3 className="text-base font-semibold text-[#e3dfd7]">{item.title}</h3>
-            <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-[#b6b3ab]">
+            <h3 className={`text-base font-semibold ${isLightTheme ? "text-[#1A1A18]" : "text-[#e3dfd7]"}`}>{item.title}</h3>
+            <p className={`mt-2 line-clamp-3 text-sm leading-relaxed ${isLightTheme ? "text-[#1A1A18]" : "text-[#b6b3ab]"}`}>
               {item.description}
             </p>
 
             <button
               type="button"
               onClick={() => copyPrompt(item.prompt, item.id)}
-              className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[#f47b4f]/55 bg-[#f47b4f] px-4 py-2.5 text-sm font-semibold text-[#1f1f1d] transition-colors hover:bg-[#f69069] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f47b4f]/60"
+              className={`mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 ${
+                isLightTheme
+                  ? "border-[#CC5F4A] bg-[#CC5F4A] text-[#FFFFFF] hover:bg-[#A84B38] focus-visible:ring-[#CC5F4A]/60"
+                  : "border-[#f47b4f]/55 bg-[#f47b4f] text-[#1f1f1d] hover:bg-[#f69069] focus-visible:ring-[#f47b4f]/60"
+              }`}
             >
               {isCopied ? <Check size={16} /> : <Copy size={16} />}
               {isCopied ? "Prompt copiado" : "Copiar prompt"}
@@ -173,8 +189,14 @@ export default function PromptCardsGrid({ prompts }: PromptCardsGridProps) {
       })}
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/10 bg-[rgba(55,55,53,0.3)] px-3 py-2.5">
-        <p className="text-[0.8rem] text-[#aaa79f]">
+      <div
+        className={`flex flex-wrap items-center justify-between gap-3 rounded-2xl border px-3 py-2.5 ${
+          isLightTheme
+            ? "border-[#E0DDD8] bg-[#F8F7F4]"
+            : "border-white/10 bg-[rgba(55,55,53,0.3)]"
+        }`}
+      >
+        <p className={`text-[0.8rem] ${isLightTheme ? "text-[#1A1A18]" : "text-[#aaa79f]"}`}>
           Página {currentPage} de {totalPages} • {filteredPrompts.length} prompts
         </p>
 
@@ -183,7 +205,11 @@ export default function PromptCardsGrid({ prompts }: PromptCardsGridProps) {
             type="button"
             onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
             disabled={currentPage === 1}
-            className="rounded-lg border border-white/12 px-2.5 py-1.5 text-[0.78rem] text-[#d7d3cb] transition-colors hover:bg-white/8 disabled:cursor-not-allowed disabled:opacity-45"
+            className={`rounded-lg border px-2.5 py-1.5 text-[0.78rem] transition-colors disabled:cursor-not-allowed disabled:opacity-45 ${
+              isLightTheme
+                ? "border-[#D8D5D0] text-[#1A1A18] hover:bg-[#ECEAE6]"
+                : "border-white/12 text-[#d7d3cb] hover:bg-white/8"
+            }`}
           >
             Anterior
           </button>
@@ -198,8 +224,12 @@ export default function PromptCardsGrid({ prompts }: PromptCardsGridProps) {
                 onClick={() => setCurrentPage(page)}
                 className={`h-8 min-w-8 rounded-lg border px-2 text-[0.78rem] transition-colors ${
                   isActive
-                    ? "border-[#f47b4f]/55 bg-[#f47b4f] font-semibold text-[#1f1f1d]"
-                    : "border-white/12 text-[#c3c0b9] hover:bg-white/8"
+                    ? isLightTheme
+                      ? "border-[#CC5F4A] bg-[#CC5F4A] font-semibold text-[#FFFFFF]"
+                      : "border-[#f47b4f]/55 bg-[#f47b4f] font-semibold text-[#1f1f1d]"
+                    : isLightTheme
+                      ? "border-[#D8D5D0] text-[#1A1A18] hover:bg-[#ECEAE6]"
+                      : "border-white/12 text-[#c3c0b9] hover:bg-white/8"
                 }`}
               >
                 {page}
@@ -213,7 +243,11 @@ export default function PromptCardsGrid({ prompts }: PromptCardsGridProps) {
               setCurrentPage((page) => Math.min(totalPages, page + 1))
             }
             disabled={currentPage === totalPages}
-            className="rounded-lg border border-white/12 px-2.5 py-1.5 text-[0.78rem] text-[#d7d3cb] transition-colors hover:bg-white/8 disabled:cursor-not-allowed disabled:opacity-45"
+            className={`rounded-lg border px-2.5 py-1.5 text-[0.78rem] transition-colors disabled:cursor-not-allowed disabled:opacity-45 ${
+              isLightTheme
+                ? "border-[#D8D5D0] text-[#1A1A18] hover:bg-[#ECEAE6]"
+                : "border-white/12 text-[#d7d3cb] hover:bg-white/8"
+            }`}
           >
             Próxima
           </button>

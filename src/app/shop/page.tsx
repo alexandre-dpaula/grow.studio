@@ -5,6 +5,8 @@ import {
   BookOpen,
   Layers,
   LayoutTemplate,
+  Mic2,
+  Play,
   Sparkles,
   type LucideIcon,
 } from "lucide-react";
@@ -21,7 +23,27 @@ type BonusItem = {
   cta: string;
   href: string;
   icon: LucideIcon;
+  coverImage?: string;
 };
+
+const PODCAST_CARD_BG =
+  "/hf_20260501_191207_cb1c7d02-f74e-4cc1-88dc-7543a7be7f49.png";
+const PROMPT_PAGINA_VENDAS_CARD_BG =
+  "/hf_20260501_193136_2dd9a147-18b6-41a3-b97a-8bf1f77f2385.png";
+const PACK_PROMPTS_CARD_BG =
+  "/hf_20260501_193648_b30036f0-627d-4404-8fb8-e2b9d91a8c23.png";
+const EBOOK_CARD_BG =
+  "/hf_20260314_230539_c5efb4e7-1371-4502-90d5-c2f4d6eee79e.jpeg";
+const KIT_CONTEXTO_CARD_BG =
+  "/hf_20260501_191725_4767c164-cd5a-4899-9460-9cc85d74cde0.png";
+const PODCAST_CARD_SOON_1 =
+  "/hf_20260314_214334_b0f80242-6be4-4125-9e9c-49e3f24ef1fe.jpeg";
+const PODCAST_CARD_SOON_2 =
+  "/hf_20260313_144236_d2f1d35b-e783-4287-8d1b-d02c1276a75e.jpeg";
+const PODCAST_CARD_SOON_3 =
+  "/hf_20260313_140155_9f1bc704-126c-461a-ae1a-9c42d5510c77.jpeg";
+const COMMUNITY_CHECKOUT_URL =
+  "https://checkout.infinitepay.io/qt-sala01-stageone/3obvvPOUZV";
 
 const bonusItems: BonusItem[] = [
   {
@@ -32,6 +54,7 @@ const bonusItems: BonusItem[] = [
     cta: "Gerar agora",
     href: "/prompt-pagina-de-vendas?from=shop",
     icon: LayoutTemplate,
+    coverImage: PROMPT_PAGINA_VENDAS_CARD_BG,
   },
   {
     id: "ebooks",
@@ -41,6 +64,7 @@ const bonusItems: BonusItem[] = [
     cta: "Baixar eBooks",
     href: "https://drive.google.com/uc?export=download&id=1vTArDG5vreAP7UvDnZpnZ6DKMKuOe5Wo",
     icon: BookOpen,
+    coverImage: EBOOK_CARD_BG,
   },
   {
     id: "prompts",
@@ -50,6 +74,16 @@ const bonusItems: BonusItem[] = [
     cta: "Abrir prompts",
     href: "/prompts?from=shop",
     icon: Sparkles,
+    coverImage: PACK_PROMPTS_CARD_BG,
+  },
+  {
+    id: "podcast",
+    title: "iA SEM LIMITES",
+    description:
+      "Episódio exclusivo IA Sem Limites para aplicar IA com mais velocidade e consistência.",
+    cta: "Ouvir episódio",
+    href: "/treinamento_ia.m4a",
+    icon: Mic2,
   },
   {
     id: "kit-contexto",
@@ -59,6 +93,7 @@ const bonusItems: BonusItem[] = [
     cta: "Acessar kit",
     href: "/kit-contexto?from=shop",
     icon: Layers,
+    coverImage: KIT_CONTEXTO_CARD_BG,
   },
 ];
 
@@ -71,6 +106,46 @@ export const metadata: Metadata = {
 };
 
 export default function ShopPage() {
+  const podcastItem = bonusItems.find((item) => item.id === "podcast");
+  const materialItems = bonusItems.filter((item) => item.id !== "podcast");
+  const podcastShowCards = [
+    {
+      id: "show-live",
+      title: podcastItem?.title ?? "iA SEM LIMITES",
+      category: "Negócios",
+      frequency: "Semanal",
+      coverImage: PODCAST_CARD_BG,
+      isComingSoon: false,
+    },
+    {
+      id: "show-soon-1",
+      title: "NOVO EPISÓDIO",
+      category: "Podcast",
+      frequency: "Em breve",
+      coverImage: PODCAST_CARD_SOON_1,
+      coverGradient: "from-[#4c1f38] via-[#291226] to-[#180d17]",
+      isComingSoon: true,
+    },
+    {
+      id: "show-soon-2",
+      title: "NOVO EPISÓDIO",
+      category: "Podcast",
+      frequency: "Em breve",
+      coverImage: PODCAST_CARD_SOON_2,
+      coverGradient: "from-[#14325d] via-[#15223f] to-[#0f1629]",
+      isComingSoon: true,
+    },
+    {
+      id: "show-soon-3",
+      title: "NOVO EPISÓDIO",
+      category: "Podcast",
+      frequency: "Em breve",
+      coverImage: PODCAST_CARD_SOON_3,
+      coverGradient: "from-[#163d32] via-[#132f27] to-[#0e1d19]",
+      isComingSoon: true,
+    },
+  ];
+
   return (
     <ShopPasswordGate>
     <main className="min-h-screen bg-[#1f1f1d] text-[#e6e2d9]">
@@ -97,7 +172,10 @@ export default function ShopPage() {
       <ShopHero />
 
       {/* ── Bônus ── */}
-      <section className="mx-auto w-full max-w-285 px-5 pb-10 sm:px-6 sm:pb-16 lg:px-8">
+      <section
+        id="podcast-episodios"
+        className="mx-auto w-full max-w-285 px-5 pb-10 sm:px-6 sm:pb-16 lg:px-8"
+      >
         <div>
           <p className="text-[0.7rem] uppercase tracking-[0.16em] text-[#6a6660]">
             Bônus Free · Material de Apoio
@@ -107,39 +185,79 @@ export default function ShopPage() {
           </h2>
         </div>
 
-        <div className="mt-5 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3 xl:grid-cols-5">
-          {bonusItems.map((item) => {
+        <div className="mt-5 grid gap-4 lg:grid-cols-2">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4">
+            {materialItems.map((item) => {
             const Icon = item.icon;
             const isEbook = item.id === "ebooks";
+            const hasCoverImage = Boolean(item.coverImage);
+
             return (
               <article
                 key={item.id}
-                className={`flex flex-col rounded-2xl p-4 transition-colors sm:p-5 ${
-                  isEbook
-                    ? "border-2 border-lime-300 bg-lime-300 hover:bg-lime-200"
-                    : "border border-white/10 bg-white/3 hover:bg-white/5"
-                }`}
+                className="group text-left"
               >
-                <span className={`inline-flex h-9 w-9 items-center justify-center rounded-xl ${
-                  isEbook
-                    ? "border border-black/15 bg-black/10 text-slate-900"
-                    : "border border-[#f47b4f]/35 bg-[#f47b4f]/12 text-[#ffd7c6]"
-                }`}>
-                  <Icon size={15} />
-                </span>
-                <h3 className={`mt-3 text-[0.82rem] font-bold uppercase leading-tight tracking-wide sm:text-[0.88rem] ${isEbook ? "text-slate-900" : "text-[#e4e0d8]"}`}>
-                  {item.title}
-                </h3>
-                <p className={`mt-2 flex-1 text-[0.78rem] leading-relaxed sm:text-[0.82rem] ${isEbook ? "text-slate-800" : "text-[#a9a59d]"}`}>
-                  {item.description}
-                </p>
+                <div
+                  className={`relative aspect-square overflow-hidden rounded-xl border transition-colors ${
+                    hasCoverImage
+                      ? "border-white/12 bg-black/25"
+                      : isEbook
+                        ? "border-lime-300 bg-lime-300"
+                        : "border-white/12 bg-[radial-gradient(circle_at_20%_18%,rgba(244,123,79,0.2),transparent_45%),linear-gradient(180deg,#1f1f1d_0%,#171716_100%)]"
+                  }`}
+                >
+                  {hasCoverImage ? (
+                    <>
+                      <div
+                        className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
+                        style={{ backgroundImage: `url(${item.coverImage})` }}
+                      />
+                      <div className="absolute inset-0 bg-black/35" />
+                    </>
+                  ) : null}
+
+                  <div className="absolute left-3 top-3">
+                    <span className={`inline-flex h-9 w-9 items-center justify-center rounded-xl ${
+                      hasCoverImage
+                        ? "border border-white/25 bg-black/30 text-[#f8f5ef]"
+                        : isEbook
+                          ? "border border-black/15 bg-black/10 text-slate-900"
+                          : "border border-[#f47b4f]/35 bg-[#f47b4f]/12 text-[#ffd7c6]"
+                    }`}>
+                      <Icon size={15} />
+                    </span>
+                  </div>
+
+                  <div
+                    className={`absolute inset-x-0 bottom-0 border-t px-3 py-3 ${
+                      hasCoverImage
+                        ? "border-white/15 bg-[linear-gradient(180deg,rgba(0,0,0,0.18)_0%,rgba(0,0,0,0.72)_100%)]"
+                        : isEbook
+                          ? "border-black/12 bg-black/[0.08]"
+                          : "border-white/10 bg-[linear-gradient(180deg,rgba(0,0,0,0.05)_0%,rgba(0,0,0,0.42)_100%)]"
+                    }`}
+                  >
+                    <h3 className={`text-[0.9rem] font-bold uppercase leading-tight tracking-wide ${
+                      hasCoverImage ? "text-[#f8f5ef]" : isEbook ? "text-slate-900" : "text-[#e4e0d8]"
+                    }`}>
+                      {item.title}
+                    </h3>
+
+                    <p className={`mt-1 line-clamp-3 text-[0.74rem] leading-relaxed ${
+                      hasCoverImage ? "text-[#ddd8cf]" : isEbook ? "text-slate-800" : "text-[#b4b0a8]"
+                    }`}>
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+
                 <Link
                   href={item.href}
                   target={item.href.startsWith("http") ? "_blank" : undefined}
                   rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                  className={`mt-4 inline-flex items-center gap-1.5 text-[0.78rem] font-bold transition-colors ${
+                  className={`mt-2 inline-flex items-center gap-1.5 text-[0.8rem] font-bold transition-colors ${
                     isEbook
-                      ? "text-slate-900 hover:text-slate-700"
+                      ? "text-lime-300 hover:text-lime-200"
                       : "text-[#f7d1be] hover:text-[#ffe4d7]"
                   }`}
                 >
@@ -148,7 +266,65 @@ export default function ShopPage() {
                 </Link>
               </article>
             );
-          })}
+            })}
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 sm:gap-4">
+            {podcastShowCards.map((card) =>
+              card.isComingSoon ? (
+                <Link
+                  key={card.id}
+                  href={COMMUNITY_CHECKOUT_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group text-left"
+                >
+                  <div className="relative aspect-square overflow-hidden rounded-xl border border-white/12 bg-black/20">
+                    {card.coverImage ? (
+                      <div
+                        className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
+                        style={{ backgroundImage: `url(${card.coverImage})` }}
+                      />
+                    ) : (
+                      <div className={`absolute inset-0 bg-gradient-to-br ${card.coverGradient ?? "from-[#262626] to-[#111111]"}`} />
+                    )}
+                    <div className="absolute inset-0 bg-black/28" />
+                    <span className="absolute left-2.5 top-2.5 rounded-full border border-lime-300/60 bg-lime-300/18 px-2 py-0.5 text-[0.58rem] font-bold uppercase tracking-[0.11em] text-lime-200">
+                      Assinantes
+                    </span>
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/18">
+                      <span className="rounded-full border border-white/30 bg-black/25 px-3 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.11em] text-white/85">
+                        Em breve
+                      </span>
+                    </div>
+                    <span className="pointer-events-none absolute bottom-2.5 left-2.5 inline-flex h-9 w-9 translate-y-1 items-center justify-center rounded-full border border-white/45 bg-black/45 text-white opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100">
+                      <Play size={15} className="translate-x-[1px]" />
+                    </span>
+                  </div>
+                  <p className="mt-2.5 truncate text-[0.94rem] font-semibold text-[#e5e5e5]">{card.title}</p>
+                  <p className="text-[0.79rem] text-[#b4b4b4]">Podcast</p>
+                </Link>
+              ) : (
+                <Link
+                  key={card.id}
+                  href="/comunidade?view=podcast"
+                  className="group text-left"
+                >
+                  <div className="relative aspect-square overflow-hidden rounded-xl border border-white/12 bg-black/20">
+                    <div
+                      className="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
+                      style={{ backgroundImage: `url(${card.coverImage})` }}
+                    />
+                    <span className="pointer-events-none absolute bottom-2.5 left-2.5 inline-flex h-9 w-9 translate-y-1 items-center justify-center rounded-full border border-white/45 bg-black/45 text-white opacity-0 transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100">
+                      <Play size={15} className="translate-x-[1px]" />
+                    </span>
+                  </div>
+                  <p className="mt-2.5 truncate text-[0.94rem] font-semibold text-[#e5e5e5]">{card.title}</p>
+                  <p className="text-[0.79rem] text-[#b4b4b4]">Podcast</p>
+                </Link>
+              ),
+            )}
+          </div>
         </div>
       </section>
 
