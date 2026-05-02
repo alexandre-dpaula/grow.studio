@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { ArrowRight, BadgeCheck } from "lucide-react";
 
-const COMMUNITY_PRINT_CARD_IMAGE = "/community-print.png";
+const COMMUNITY_PRINT_CARD_IMAGE = "/comunidade-print.png";
 
 export default function ShopHero() {
   return (
@@ -18,7 +18,7 @@ export default function ShopHero() {
                 src={COMMUNITY_PRINT_CARD_IMAGE}
                 alt="Preview da comunidade"
                 fill
-                className="object-cover object-center"
+                className="object-cover object-left"
               />
             </div>
           </div>

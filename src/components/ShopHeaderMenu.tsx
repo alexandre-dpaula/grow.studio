@@ -3,13 +3,13 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { KeyRound, Settings } from "lucide-react";
 import {
+  SHOP_DEFAULT_PASSWORD,
   SHOP_OPEN_PASSWORD_PANEL_EVENT,
   SHOP_PASSWORD_ENABLED_STORAGE_KEY,
+  SHOP_PASSWORD_STORAGE_KEY,
   SHOP_SETTINGS_ACCESS_SESSION_KEY,
   SHOP_TOGGLE_PASSWORD_EVENT,
 } from "@/lib/shop-access";
-
-const SETTINGS_PASSWORD = "210199";
 
 export default function ShopHeaderMenu() {
   const [isOpen, setIsOpen] = useState(false);
@@ -69,8 +69,10 @@ export default function ShopHeaderMenu() {
 
   function handleAuthenticateSettings(event: FormEvent) {
     event.preventDefault();
+    const activeShopPassword =
+      window.localStorage.getItem(SHOP_PASSWORD_STORAGE_KEY) ?? SHOP_DEFAULT_PASSWORD;
 
-    if (settingsPasswordInput === SETTINGS_PASSWORD) {
+    if (settingsPasswordInput === activeShopPassword) {
       setIsSettingsUnlocked(true);
       setSettingsPasswordInput("");
       setSettingsError(false);
@@ -90,7 +92,7 @@ export default function ShopHeaderMenu() {
         <button
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-black/20 bg-transparent text-[#1a1a18] transition-colors hover:border-black/35 hover:bg-black/5"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-transparent text-[#1a1a18] transition-colors hover:bg-black/5"
           aria-expanded={isOpen}
           aria-haspopup="menu"
           aria-label="Abrir menu de configuração"

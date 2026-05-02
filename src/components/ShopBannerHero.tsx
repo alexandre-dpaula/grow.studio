@@ -32,8 +32,10 @@ export default function ShopBannerHero() {
             </div>
 
             <p className="mt-6 max-w-[31ch] text-[clamp(1rem,4.9vw,1.35rem)] leading-[1.14] text-[#171715]">
-              Não é um curso de IA genérico. É um treinamento prático para você aprender
-              a ferramenta que está substituindo equipes inteiras dentro de empresas.
+              Não é um curso de IA genérico. É um treinamento prático para você aprender{" "}
+              <span className="font-semibold uppercase">
+                a ferramenta que está substituindo equipes inteiras dentro de empresas.
+              </span>
             </p>
 
             <div className="mt-7 flex w-full max-w-[560px] flex-col gap-3">

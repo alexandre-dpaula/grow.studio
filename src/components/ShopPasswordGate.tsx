@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Lock, ArrowRight } from "lucide-react";
 import {
+  SHOP_DEFAULT_PASSWORD,
   SHOP_IDLE_TIMEOUT_MS,
   SHOP_LAST_ACTIVITY_SESSION_KEY,
   SHOP_OPEN_PASSWORD_PANEL_EVENT,
@@ -11,7 +12,6 @@ import {
   SHOP_TOGGLE_PASSWORD_EVENT,
 } from "@/lib/shop-access";
 
-const DEFAULT_PASSWORD = "iA1104";
 const IMG = "/2hf_20260314_230539_c5efb4e7-1371-4502-90d5-c2f4d6eee79e.jpg";
 
 export default function ShopPasswordGate({ children }: { children: React.ReactNode }) {
@@ -20,7 +20,7 @@ export default function ShopPasswordGate({ children }: { children: React.ReactNo
   const [sessionMessage, setSessionMessage] = useState("");
   const [unlocked, setUnlocked] = useState(false);
   const [isPasswordEnabled, setIsPasswordEnabled] = useState(true);
-  const [password, setPassword] = useState(DEFAULT_PASSWORD);
+  const [password, setPassword] = useState(SHOP_DEFAULT_PASSWORD);
   const [isPasswordPanelOpen, setIsPasswordPanelOpen] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
