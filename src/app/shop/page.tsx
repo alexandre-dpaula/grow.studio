@@ -17,6 +17,7 @@ import ShopBannerHero from "@/components/ShopBannerHero";
 import TreinamentosCardsGrid from "@/components/TreinamentosCardsGrid";
 import ShopPasswordGate from "@/components/ShopPasswordGate";
 import ShopHeaderMenu from "@/components/ShopHeaderMenu";
+import { getCommunityUnlockHref } from "@/lib/community-access";
 
 type BonusItem = {
   id: string;
@@ -306,7 +307,7 @@ export default function ShopPage() {
                 ) : (
                   <Link
                     key={card.id}
-                    href="/comunidade?view=podcast"
+                    href={getCommunityUnlockHref("/comunidade?view=podcast")}
                     className="group text-left"
                   >
                     <div className="relative aspect-square overflow-hidden rounded-xl border border-white/12 bg-black/20">

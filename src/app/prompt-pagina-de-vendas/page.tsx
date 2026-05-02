@@ -13,6 +13,7 @@ import {
   LayoutTemplate,
   Share2,
 } from "lucide-react";
+import { getCommunityUnlockHref } from "@/lib/community-access";
 
 type SectionKey =
   | "hero"
@@ -920,7 +921,10 @@ export default function PromptPaginaDeVendasPage() {
     const params = new URLSearchParams(window.location.search);
     setFrom(params.get("from"));
   }, []);
-  const backHref = from === "comunidade" ? "/comunidade?view=chat" : "/shop";
+  const backHref =
+    from === "comunidade"
+      ? getCommunityUnlockHref("/comunidade?view=chat")
+      : "/shop";
   const backLabel =
     from === "comunidade" ? "Voltar para a Comunidade" : "Voltar para a Shop";
   const [form, setForm] = useState<FormData>(emptyForm);

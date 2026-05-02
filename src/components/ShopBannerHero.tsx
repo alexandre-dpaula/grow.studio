@@ -8,7 +8,7 @@ const WHATSAPP_GROUP_URL =
 
 export default function ShopBannerHero() {
   return (
-    <section className="relative overflow-hidden border-b border-black/10 bg-[#ece9e1]">
+    <section className="relative overflow-hidden border-b border-black/10 bg-[#f0ebe1]">
       <div className="mx-auto w-full max-w-[1820px] px-5 pb-0 pt-9 sm:px-8 sm:pb-0 sm:pt-12 lg:px-12 lg:pb-0 lg:pt-14">
         <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-14">
           <div className="mt-4 max-w-[700px] px-2 sm:mt-6 sm:px-4 lg:mt-8 lg:px-0">
@@ -41,7 +41,7 @@ export default function ShopBannerHero() {
                 href={WHATSAPP_GROUP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex w-full items-center justify-center gap-2 border border-[#df7b5b] bg-[#df7b5b] px-3.5 py-2 text-[0.88rem] font-medium text-[#ffe2d3] transition-colors hover:bg-[#d86e4d] lg:px-4 lg:py-2.5 lg:text-[1.05rem]"
+                className="inline-flex w-[88%] items-center justify-center gap-2 border border-[#df7b5b] bg-[#df7b5b] px-3.5 py-2 text-[0.88rem] font-medium text-[#ffe2d3] transition-colors hover:bg-[#d86e4d] lg:w-[78%] lg:px-4 lg:py-2.5 lg:text-[1.05rem]"
               >
                 <MousePointerClick size={18} aria-hidden="true" />
                 Garantir minha vaga
@@ -51,7 +51,7 @@ export default function ShopBannerHero() {
                 href={WHATSAPP_GROUP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex w-full items-center justify-center gap-2 border-2 border-[#141412] bg-transparent px-3.5 py-2 text-[0.88rem] font-medium text-[#141412] transition-colors hover:bg-black/5 lg:px-4 lg:py-2.5 lg:text-[1.05rem]"
+                className="inline-flex w-[88%] items-center justify-center gap-2 border-2 border-[#141412] bg-transparent px-3.5 py-2 text-[0.88rem] font-medium text-[#141412] transition-colors hover:bg-black/5 lg:w-[78%] lg:px-4 lg:py-2.5 lg:text-[1.05rem]"
               >
                 O que vou aprender
                 <ArrowDown size={16} />
@@ -60,13 +60,22 @@ export default function ShopBannerHero() {
           </div>
 
           <div
-            className="relative min-h-[360px] overflow-hidden bg-cover bg-center bg-no-repeat sm:min-h-[460px] lg:min-h-[700px]"
-            style={{
-              backgroundImage:
-                "url('/hf_20260501_201750_6423071f-f056-4021-9be0-8cef908deebe.png')",
-            }}
+            className="relative min-h-[360px] overflow-hidden sm:min-h-[460px] lg:min-h-[700px]"
             aria-label="Visual do treinamento"
-          />
+          >
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="h-full w-full object-cover object-center"
+            >
+              <source
+                src="/hf_20260502_092738_707f17ce-8a84-4e7f-9232-23174624414a.mp4"
+                type="video/mp4"
+              />
+            </video>
+          </div>
         </div>
       </div>
     </section>

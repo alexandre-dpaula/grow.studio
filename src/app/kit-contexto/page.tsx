@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ArrowLeft, BadgeCheck, Check, Copy, ChevronRight } from "lucide-react";
+import { getCommunityUnlockHref } from "@/lib/community-access";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -394,7 +395,10 @@ export default function KitContextoPage() {
     const params = new URLSearchParams(window.location.search);
     setFrom(params.get("from"));
   }, []);
-  const backHref = from === "comunidade" ? "/comunidade?view=chat" : "/shop";
+  const backHref =
+    from === "comunidade"
+      ? getCommunityUnlockHref("/comunidade?view=chat")
+      : "/shop";
   const backLabel =
     from === "comunidade" ? "Voltar para a Comunidade" : "Voltar para a Shop";
   const [form, setForm] = useState<FormData>(emptyForm);

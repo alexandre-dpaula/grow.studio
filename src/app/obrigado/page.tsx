@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import WhatsAppIcon from "@/components/WhatsAppIcon";
+import {
+  getCommunityUnlockHref,
+} from "@/lib/community-access";
 
 const WHATSAPP_GROUP_URL =
   "https://chat.whatsapp.com/Jf0qePzQfURKwmML6gYC30?mode=gi_t";
@@ -64,6 +68,15 @@ export default function ObrigadoPage() {
                 Acessar o grupo de WhatsApp
                 <ArrowRight size={16} />
               </a>
+            </Reveal>
+
+            <Reveal delay={0.3} className="mt-4">
+              <Link
+                href={getCommunityUnlockHref("/comunidade?view=chat")}
+                className="inline-flex w-full items-center justify-center rounded-full border border-[#df7b5b] bg-[#df7b5b] px-6 py-3.5 text-sm font-semibold text-[#1a1a18] transition-all duration-300 hover:bg-[#d86e4d] sm:w-auto"
+              >
+                Acessar a Comunidade
+              </Link>
             </Reveal>
           </div>
         </div>

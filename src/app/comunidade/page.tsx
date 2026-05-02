@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { cookies } from "next/headers";
 import {
   AppWindow,
   ArrowLeft,
@@ -29,6 +30,7 @@ import CommunityPodcastCards from "@/components/CommunityPodcastCards";
 import PromptCardsGrid from "@/components/PromptCardsGrid";
 import TreinamentosCardsGrid from "@/components/TreinamentosCardsGrid";
 import { COMMUNITY_PROMPTS } from "@/data/community-prompts";
+import { COMMUNITY_ACCESS_COOKIE } from "@/lib/community-access";
 
 type PageProps = {
   searchParams: Promise<{
@@ -137,6 +139,28 @@ export const metadata: Metadata = {
 };
 
 export default async function ComunidadePage({ searchParams }: PageProps) {
+  const cookieStore = await cookies();
+  const hasCommunityAccess =
+    cookieStore.get(COMMUNITY_ACCESS_COOKIE)?.value === "granted";
+
+  if (!hasCommunityAccess) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-[#1f1f1d] px-5 py-10 text-[#d9d6ce]">
+        <div className="w-full max-w-xl rounded-2xl border border-white/10 bg-[#1d1d1b] p-7 text-center sm:p-9">
+          <p className="text-xs uppercase tracking-[0.14em] text-[#9d9a93]">
+            Área restrita
+          </p>
+          <h1 className="mt-3 font-serif text-2xl font-bold uppercase text-[#e0dcd4] sm:text-3xl">
+            Acesso bloqueado
+          </h1>
+          <p className="mt-3 text-[0.95rem] text-[#bcb8b0]">
+            Para entrar na Comunidade, acesse pelo botão na página de obrigado.
+          </p>
+        </div>
+      </main>
+    );
+  }
+
   const { view, id, lang, theme } = await searchParams;
   const isPromptsView = view === "prompts";
   const isConversationsView = view === "conversas";

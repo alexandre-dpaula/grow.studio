@@ -90,12 +90,12 @@ export default function ShopHeaderMenu() {
         <button
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/12 bg-black/45 text-[#e6e2d9] backdrop-blur-md transition-colors hover:border-white/22 hover:bg-black/60"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-black/20 bg-transparent text-[#1a1a18] transition-colors hover:border-black/35 hover:bg-black/5"
           aria-expanded={isOpen}
           aria-haspopup="menu"
           aria-label="Abrir menu de configuração"
         >
-          <Settings size={16} className="text-[#f7d7c9]" />
+          <Settings size={16} className="text-[#1a1a18]" />
         </button>
 
         {isOpen ? (

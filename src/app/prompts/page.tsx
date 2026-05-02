@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { ArrowLeft, BadgeCheck, Sparkles, Copy } from "lucide-react";
 import { COMMUNITY_PROMPTS } from "@/data/community-prompts";
 import PromptCardsGrid from "@/components/PromptCardsGrid";
+import { getCommunityUnlockHref } from "@/lib/community-access";
 
 type Prompt = {
   id: string;
@@ -466,7 +467,10 @@ export default function PromptsPage() {
     const params = new URLSearchParams(window.location.search);
     setFrom(params.get("from"));
   }, []);
-  const backHref = from === "comunidade" ? "/comunidade?view=chat" : "/shop";
+  const backHref =
+    from === "comunidade"
+      ? getCommunityUnlockHref("/comunidade?view=chat")
+      : "/shop";
   const backLabel =
     from === "comunidade" ? "Voltar para a Comunidade" : "Voltar para a Shop";
   const [activeTab, setActiveTab] = useState(TAB_IDS[0]);
